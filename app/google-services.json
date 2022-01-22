@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "587802478532",
+    "project_id": "labelfree-18347",
+    "storage_bucket": "labelfree-18347.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:587802478532:android:b9ea9dcb7b71bac31b0691",
+        "android_client_info": {
+          "package_name": "com.example.labelfree"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "587802478532-aio3b530h4108i6bhiu8saahlelubfp9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBg0qm_d86VcSneBXKaMB5lWQkHnFhvlJA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "587802478532-aio3b530h4108i6bhiu8saahlelubfp9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -24,6 +24,21 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="422dp" />
 
+    <Button
+        android:id="@+id/ciderBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="사이다"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <Button
+        android:id="@+id/cokeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="콜라"
+        app:layout_constraintStart_toEndOf="@+id/ciderBtn"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
