@@ -7,23 +7,23 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="16dp"
-        android:paddingEnd="16dp"
         android:paddingStart="16dp"
-        android:paddingTop="10dp">
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp">
 
         <ImageView
             android:id="@+id/menuBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_menu_24"/>
+            android:src="@drawable/ic_baseline_menu_24" />
 
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="23dp"
-            android:paddingTop="4dp"
-            android:src="@drawable/labelfree_logo"/>
+            android:paddingTop="0dp"
+            android:src="@drawable/labelfree_logo" />
 
     </RelativeLayout>
 
