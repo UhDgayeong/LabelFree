@@ -1,17 +1,33 @@
 package com.example.labelfree
 
 import android.content.ContentValues.TAG
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.charts.RadarChart
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.formatter.IAxisValueFormatter
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.util.*
 import kotlin.properties.Delegates
+
+class Product(
+    var name:String = "",
+    var fat:Float = 0F,
+    var cargo:Float = 0F,
+    var protein:Float = 0F,
+    var sugar:Float = 0F,
+    var natrium:Float = 0F,
+)
 
 class LabelInfoActivity : AppCompatActivity() {
 
-    private val TAG = "LabelInfo"
+    private val TAG = "LabelInfoTest"
     private val db = Firebase.firestore
     private val docName = "코카콜라 제로"
 
@@ -32,6 +48,30 @@ class LabelInfoActivity : AppCompatActivity() {
         val proteinTxt = findViewById<TextView>(R.id.proteinTxt)
 
 
+
+        val productList = ArrayList<Map<String, Any>>()
+
+        db.collection("drinks").get()
+            .addOnSuccessListener { result ->
+                for (doc in result) {
+                    productList.add(mapOf(
+                        "productName" to doc.data["제품명"].toString(),
+                        "cargo" to doc.data["탄수화물"].toString().toFloat(),
+                        "sugar" to doc.data["당류"].toString().toFloat(),
+                        "natrium" to doc.data["나트륨"].toString().toFloat(),
+                        "fat" to doc.data["지방"].toString().toFloat(),
+                        "protein" to doc.data["단백질"].toString().toFloat(),
+                    ))
+                    // Log.d(TAG, "onCreate: ${doc.data}")
+                }
+
+                for (pd in productList) {
+                    Log.d(TAG,"탄수화물 : ${pd["cargo"]} / 당류 : ${pd["sugar"]} / 나트륨 : ${pd["natrium"]} / 지방 : ${pd["fat"]} / 단백질 : ${pd["protein"]}")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w(TAG, "Error getting documents.", exception)
+            }
 
         db.collection("drinks")
             .whereEqualTo("제품명", docName)
@@ -60,7 +100,6 @@ class LabelInfoActivity : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error getting documents.", exception)
             }
-
 
     }
 }

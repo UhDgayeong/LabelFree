@@ -42,4 +42,6 @@
         android:text="단백질"
         android:textSize="30dp"/>
 
+
+
 </LinearLayout>
