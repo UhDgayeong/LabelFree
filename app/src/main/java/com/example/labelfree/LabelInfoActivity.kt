@@ -24,6 +24,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.*
 import kotlin.math.roundToInt
+import kotlin.properties.Delegates
 
 class Product(
     var name:String = "",
@@ -38,7 +39,7 @@ class LabelInfoActivity : AppCompatActivity() {
 
     private val TAG = "LabelInfoTest"
     private val db = Firebase.firestore
-    private val docName = "코카콜라 제로"
+    private val docName = "칠성사이다 ECO"
 
     private var carbo : Float = 0F
     private var sugar : Float = 0F
@@ -46,41 +47,72 @@ class LabelInfoActivity : AppCompatActivity() {
     private var fat : Float = 0F
     private var protein : Float = 0F
 
+    lateinit var barChart : HorizontalBarChart
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_label_info)
 
-        val carboTxt = findViewById<TextView>(R.id.carboTxt)
-        val sugarTxt = findViewById<TextView>(R.id.sugarTxt)
-        val natriumTxt = findViewById<TextView>(R.id.natriumTxt)
-        val fatTxt = findViewById<TextView>(R.id.fatTxt)
-        val proteinTxt = findViewById<TextView>(R.id.proteinTxt)
 
+        barChart = findViewById<HorizontalBarChart>(R.id.chart)
+        barChart.setNoDataText("")
 
+        val productList = ArrayList<Map<String, String>>()
+        //var igds = ArrayList<Map<String, Float>>()
+        //val productList = ArrayList<Map<Map<String, String>, igds>>()
 
-        val productList = ArrayList<Map<String, Any>>()
 
         db.collection("drinks").get()
             .addOnSuccessListener { result ->
                 for (doc in result) {
                     productList.add(mapOf(
                         "productName" to doc.data["제품명"].toString(),
-                        "cargo" to doc.data["탄수화물"].toString().toFloat(),
-                        "sugar" to doc.data["당류"].toString().toFloat(),
-                        "natrium" to doc.data["나트륨"].toString().toFloat(),
-                        "fat" to doc.data["지방"].toString().toFloat(),
-                        "protein" to doc.data["단백질"].toString().toFloat(),
+                        "carbo" to doc.data["탄수화물"].toString(),
+                        "sugar" to doc.data["당류"].toString(),
+                        "natrium" to doc.data["나트륨"].toString(),
+                        "fat" to doc.data["지방"].toString(),
+                        "protein" to doc.data["단백질"].toString(),
                     ))
                     // Log.d(TAG, "onCreate: ${doc.data}")
                 }
 
                 for (pd in productList) {
-                    Log.d(TAG,"탄수화물 : ${pd["cargo"]} / 당류 : ${pd["sugar"]} / 나트륨 : ${pd["natrium"]} / 지방 : ${pd["fat"]} / 단백질 : ${pd["protein"]}")
+                    //Log.d(TAG,"탄수화물 : ${pd["cargo"]} / 당류 : ${pd["sugar"]} / 나트륨 : ${pd["natrium"]} / 지방 : ${pd["fat"]} / 단백질 : ${pd["protein"]}")
+                    if (pd["productName"] == docName) {
+                        Log.d(TAG, "size : ${productList.size}")
+                        Log.d(TAG,"탄수화물 : ${pd["carbo"]} / 당류 : ${pd["sugar"]} / 나트륨 : ${pd["natrium"]} / 지방 : ${pd["fat"]} / 단백질 : ${pd["protein"]}")
+                        carbo = pd["carbo"]?.toFloat() ?: 0F
+                        sugar = pd["sugar"]?.toFloat() ?: 0F
+                        natrium = pd["natrium"]?.toFloat() ?: 0F
+                        fat = pd["fat"]?.toFloat() ?: 0F
+                        protein = pd["protein"]?.toFloat() ?: 0F
+
+                        Log.d(TAG, "carbo : $carbo")
+                        Log.d(TAG, "suagr : $sugar")
+                        Log.d(TAG, "natrium : $natrium")
+                        Log.d(TAG, "fat : $fat")
+                        Log.d(TAG, "protein : $protein")
+
+                        val entryList = mutableListOf<BarEntry>()
+                        entryList.add(BarEntry(4f, carbo))
+                        entryList.add(BarEntry(3f, sugar))
+                        entryList.add(BarEntry(2f, natrium))
+                        entryList.add(BarEntry(1f, fat))
+                        entryList.add(BarEntry(0f, protein))
+
+                        makeGraph(entryList)
+                    }
                 }
             }
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error getting documents.", exception)
             }
+
+        Log.d(TAG, "carbo : $carbo")
+        Log.d(TAG, "suagr : $sugar")
+        Log.d(TAG, "natrium : $natrium")
+        Log.d(TAG, "fat : $fat")
+        Log.d(TAG, "protein : $protein")
 
         //carboTxt.text = productList[]
 
@@ -112,18 +144,28 @@ class LabelInfoActivity : AppCompatActivity() {
 //                Log.w(TAG, "Error getting documents.", exception)
 //            }
 
+        /*
         val entryList = mutableListOf<BarEntry>()
-        entryList.add(BarEntry(4f, 10f))
-        entryList.add(BarEntry(3f, 20f))
-        entryList.add(BarEntry(2f, 30f))
-        entryList.add(BarEntry(1f, 40f))
-        entryList.add(BarEntry(0f, 50f))
+        entryList.add(BarEntry(4f, carbo))
+        entryList.add(BarEntry(3f, sugar))
+        entryList.add(BarEntry(2f, natrium))
+        entryList.add(BarEntry(1f, fat))
+        entryList.add(BarEntry(0f, protein))*/
 //        entryList.add(BarEntry(0f,1f))
 //        entryList.add(BarEntry(1f,5f))
 //        entryList.add(BarEntry(2f,0f))
 
+
+
+
+
+    } //onCreate
+
+    private fun makeGraph(entryList : List<BarEntry>) {
+
         val barDataSet = BarDataSet(entryList, "MyBarDataSet")
 
+        barChart.setExtraOffsets(40F, 10F, 10F, 10F)
         val colorList = listOf(
             Color.rgb(216, 117, 248),
             Color.rgb(152, 118, 255),
@@ -134,7 +176,7 @@ class LabelInfoActivity : AppCompatActivity() {
         )
 
         barDataSet.colors = colorList
-            //ColorTemplate.rgb("#4CB7EB")
+        //ColorTemplate.rgb("#4CB7EB")
         barDataSet.valueTextSize = 15f // 값 숫자 크기
         //barDataSet.valueFormatter = DefaultValueFormatter(0)
 
@@ -144,7 +186,7 @@ class LabelInfoActivity : AppCompatActivity() {
         //barData.setValueFormatter(DefaultValueFormatter(0))
         barData.setValueFormatter(PercentFormatter())
 
-        val barChart = findViewById<HorizontalBarChart>(R.id.chart)
+
         barChart.data = barData
         barChart.invalidate()
 
@@ -211,13 +253,9 @@ class LabelInfoActivity : AppCompatActivity() {
             axisLeft.axisMaximum = 100f
             axisRight.axisMinimum = 0f
 
-            setNoDataText("표시할 데이터가 없습니다")
+
         } //barChart
-
-
-
-    } //onCreate
-
+    }
     /*
 
     private fun initBarDataSet(barDataSet: BarDataSet) {
@@ -246,4 +284,4 @@ class LabelInfoActivity : AppCompatActivity() {
         barChart.data = data
         barChart.invalidate()
     }*/
-}
+} // class

@@ -7,47 +7,6 @@
     android:orientation="vertical"
     tools:context=".LabelInfoActivity">
 
-    <TextView
-        android:id="@+id/carboTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumsquarer"
-        android:text="탄수화물"
-        android:textSize="30dp"
-        android:typeface="monospace" />
-
-    <TextView
-        android:id="@+id/sugarTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumsquarer"
-        android:text="당류"
-        android:textSize="30dp" />
-
-    <TextView
-        android:id="@+id/natriumTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumsquarer"
-        android:text="나트륨"
-        android:textSize="30dp" />
-
-    <TextView
-        android:id="@+id/fatTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumsquarer"
-        android:text="지방"
-        android:textSize="30dp" />
-
-    <TextView
-        android:id="@+id/proteinTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumsquarer"
-        android:text="단백질"
-        android:textSize="30dp" />
-
 
     <com.github.mikephil.charting.charts.HorizontalBarChart
         android:id="@+id/chart"
@@ -55,7 +14,7 @@
         android:layout_height="200dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="20dp" />
+        android:layout_marginEnd="16dp" />
 
 
 </LinearLayout>
