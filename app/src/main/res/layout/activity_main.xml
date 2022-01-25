@@ -11,11 +11,9 @@
     <ImageView
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_marginStart="60dp"
         android:src="@drawable/labery_inmain"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -30,14 +28,6 @@
         android:layout_height="wrap_content"
         android:text="사이다"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline2" />
-
-    <Button
-        android:id="@+id/cokeBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="콜라"
-        app:layout_constraintStart_toEndOf="@+id/ciderBtn"
         app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
 

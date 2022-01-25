@@ -1,10 +1,13 @@
 package com.example.labelfree
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.HorizontalBarChart
 import com.github.mikephil.charting.components.Description
@@ -19,27 +22,21 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.shadow.ShadowRenderer
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import org.w3c.dom.Text
 import java.util.*
 import kotlin.math.roundToInt
 import kotlin.properties.Delegates
-
-class Product(
-    var name:String = "",
-    var fat:Float = 0F,
-    var cargo:Float = 0F,
-    var protein:Float = 0F,
-    var sugar:Float = 0F,
-    var natrium:Float = 0F,
-)
 
 class LabelInfoActivity : AppCompatActivity() {
 
     private val TAG = "LabelInfoTest"
     private val db = Firebase.firestore
-    private val docName = "칠성사이다 ECO"
+    private val docName = "코카콜라 제로"
 
     private var carbo : Float = 0F
     private var sugar : Float = 0F
@@ -48,19 +45,59 @@ class LabelInfoActivity : AppCompatActivity() {
     private var protein : Float = 0F
 
     lateinit var barChart : HorizontalBarChart
+    lateinit var image : ImageView
+    lateinit var nameTxt : TextView
+
+    lateinit var date2 : TextView
+    lateinit var ml2 : TextView
+    lateinit var cal2 : TextView
+    lateinit var raw2 : TextView
+    lateinit var caution2 : TextView
+    lateinit var type2 : TextView
+    lateinit var company2 : TextView
+    lateinit var manufac2 : TextView
+    lateinit var contmat2 : TextView
+
+
+    private val storageRef = Firebase.storage.reference.child(docName + ".png")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_label_info)
 
+        nameTxt = findViewById(R.id.nameTxt)
+        nameTxt.text = docName
 
-        barChart = findViewById<HorizontalBarChart>(R.id.chart)
+        image = findViewById(R.id.image)
+        storageRef.downloadUrl.addOnCompleteListener(OnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Glide.with(this)
+                    .load(task.result)
+                    .into(image)
+            }
+        })
+
+        barChart = findViewById(R.id.chart)
         barChart.setNoDataText("")
 
         val productList = ArrayList<Map<String, String>>()
-        //var igds = ArrayList<Map<String, Float>>()
-        //val productList = ArrayList<Map<Map<String, String>, igds>>()
 
+        val backBtn = findViewById<ImageView>(R.id.backBtn)
+        backBtn.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        date2 = findViewById(R.id.date2)
+        ml2 = findViewById(R.id.ml2)
+        cal2 = findViewById(R.id.cal2)
+        raw2 = findViewById(R.id.raw2)
+        caution2 = findViewById(R.id.caution2)
+        type2 = findViewById(R.id.type2)
+        company2 = findViewById(R.id.company2)
+        manufac2 = findViewById(R.id.manufac2)
+        contmat2 = findViewById(R.id.contmat2)
 
         db.collection("drinks").get()
             .addOnSuccessListener { result ->
@@ -73,6 +110,18 @@ class LabelInfoActivity : AppCompatActivity() {
                         "fat" to doc.data["지방"].toString(),
                         "protein" to doc.data["단백질"].toString(),
                     ))
+
+                    // setting text
+                    date2.text = doc.data["유통기한"].toString()
+                    ml2.text = doc.data["총 내용량"].toString()
+                    cal2.text = doc.data["총 칼로리"].toString()
+                    raw2.text = doc.data["원재료명"].toString()
+                    caution2.text = doc.data["주의사항"].toString()
+                    type2.text = doc.data["식품유형"].toString()
+                    company2.text = doc.data["제조회사"].toString()
+                    manufac2.text = doc.data["제조원"].toString()
+                    contmat2.text = doc.data["용기재질"].toString()
+
                     // Log.d(TAG, "onCreate: ${doc.data}")
                 }
 
@@ -107,58 +156,6 @@ class LabelInfoActivity : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error getting documents.", exception)
             }
-
-        Log.d(TAG, "carbo : $carbo")
-        Log.d(TAG, "suagr : $sugar")
-        Log.d(TAG, "natrium : $natrium")
-        Log.d(TAG, "fat : $fat")
-        Log.d(TAG, "protein : $protein")
-
-        //carboTxt.text = productList[]
-
-//        db.collection("drinks")
-//            .whereEqualTo("제품명", docName)
-//            .get()
-//            .addOnSuccessListener { result ->
-//                for (doc in result) {
-//                    //Log.d(TAG, "${doc["나트륨"]} => ${doc["탄수화물"]}")
-//                    carboTxt.text = doc["탄수화물"].toString()
-//                    carbo = doc["탄수화물"].toString().toFloat()
-//
-//                    sugarTxt.text = doc["당류"].toString()
-//                    sugar = doc["당류"].toString().toFloat()
-//
-//                    natriumTxt.text = doc["나트륨"].toString()
-//                    natrium = doc["나트륨"].toString().toFloat()
-//
-//                    fatTxt.text = doc["지방"].toString()
-//                    fat = doc["지방"].toString().toFloat()
-//
-//                    proteinTxt.text = doc["단백질"].toString()
-//                    protein = doc["단백질"].toString().toFloat()
-//
-//                    Log.d(TAG,"탄수화물 : ${carbo} / 당류 : ${sugar} / 나트륨 : ${natrium} / 지방 : ${fat} / 단백질 : ${protein}")
-//                }
-//            }
-//            .addOnFailureListener { exception ->
-//                Log.w(TAG, "Error getting documents.", exception)
-//            }
-
-        /*
-        val entryList = mutableListOf<BarEntry>()
-        entryList.add(BarEntry(4f, carbo))
-        entryList.add(BarEntry(3f, sugar))
-        entryList.add(BarEntry(2f, natrium))
-        entryList.add(BarEntry(1f, fat))
-        entryList.add(BarEntry(0f, protein))*/
-//        entryList.add(BarEntry(0f,1f))
-//        entryList.add(BarEntry(1f,5f))
-//        entryList.add(BarEntry(2f,0f))
-
-
-
-
-
     } //onCreate
 
     private fun makeGraph(entryList : List<BarEntry>) {
@@ -176,7 +173,6 @@ class LabelInfoActivity : AppCompatActivity() {
         )
 
         barDataSet.colors = colorList
-        //ColorTemplate.rgb("#4CB7EB")
         barDataSet.valueTextSize = 15f // 값 숫자 크기
         //barDataSet.valueFormatter = DefaultValueFormatter(0)
 
@@ -256,32 +252,4 @@ class LabelInfoActivity : AppCompatActivity() {
 
         } //barChart
     }
-    /*
-
-    private fun initBarDataSet(barDataSet: BarDataSet) {
-        //showing the value of the bar, default true if not set
-        barDataSet.setDrawValues(false)
-        //setting the text size of the value of the bar
-        barDataSet.valueTextSize = 12f
-    }
-
-    private fun setWeek(barChart: BarChart, entryList: MutableList<BarEntry>) {
-        initBarChart(barChart)
-
-        barChart.setScaleEnabled(false) //Zoom In/Out
-
-        val valueList = ArrayList<Double>()
-        val entries: ArrayList<BarEntry> = ArrayList()
-        //val title = "걸음 수"
-
-        //fit the data into a bar
-        for (i in 0 until valueList.size) {
-            val barEntry = BarEntry(i.toFloat(), valueList[i].toFloat())
-            entries.add(barEntry)
-        }
-        val barDataSet = BarDataSet(entryList, "")
-        val data = BarData(barDataSet)
-        barChart.data = data
-        barChart.invalidate()
-    }*/
 } // class
