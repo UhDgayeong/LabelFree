@@ -27,8 +27,12 @@ import com.google.android.material.shadow.ShadowRenderer
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.w3c.dom.Text
 import java.util.*
+import kotlin.coroutines.CoroutineContext
 import kotlin.math.roundToInt
 import kotlin.properties.Delegates
 
@@ -36,7 +40,9 @@ class LabelInfoActivity : AppCompatActivity() {
 
     private val TAG = "LabelInfoTest"
     private val db = Firebase.firestore
-    private val docName = "코카콜라 제로"
+
+    //private val docName = "칠성사이다 ECO"
+    //private val docName = "코카콜라 제로"
 
     private var carbo : Float = 0F
     private var sugar : Float = 0F
@@ -58,12 +64,17 @@ class LabelInfoActivity : AppCompatActivity() {
     lateinit var manufac2 : TextView
     lateinit var contmat2 : TextView
 
+    private lateinit var docName : String
 
-    private val storageRef = Firebase.storage.reference.child(docName + ".png")
+    val productList = ArrayList<Map<String, String>>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_label_info)
+
+        docName = intent.getStringExtra("Name").toString()
+
+        val storageRef = Firebase.storage.reference.child(docName + ".png")
 
         nameTxt = findViewById(R.id.nameTxt)
         nameTxt.text = docName
@@ -80,7 +91,7 @@ class LabelInfoActivity : AppCompatActivity() {
         barChart = findViewById(R.id.chart)
         barChart.setNoDataText("")
 
-        val productList = ArrayList<Map<String, String>>()
+        //val productList = ArrayList<Map<String, String>>()
 
         val backBtn = findViewById<ImageView>(R.id.backBtn)
         backBtn.setOnClickListener {
@@ -99,7 +110,14 @@ class LabelInfoActivity : AppCompatActivity() {
         manufac2 = findViewById(R.id.manufac2)
         contmat2 = findViewById(R.id.contmat2)
 
-        db.collection("drinks").get()
+
+        getData()
+    } //onCreate
+
+    private fun getData() {
+        db.collection("drinks")
+            .whereEqualTo("제품명", docName)
+            .get()
             .addOnSuccessListener { result ->
                 for (doc in result) {
                     productList.add(mapOf(
@@ -109,20 +127,16 @@ class LabelInfoActivity : AppCompatActivity() {
                         "natrium" to doc.data["나트륨"].toString(),
                         "fat" to doc.data["지방"].toString(),
                         "protein" to doc.data["단백질"].toString(),
+                        "date" to doc.data["유통기한"].toString(),
+                        "ml" to doc.data["총 내용량"].toString(),
+                        "cal" to doc.data["총 칼로리"].toString(),
+                        "raw" to doc.data["원재료명"].toString(),
+                        "caution" to doc.data["주의사항"].toString(),
+                        "type" to doc.data["식품유형"].toString(),
+                        "company" to doc.data["제조회사"].toString(),
+                        "manufac" to doc.data["제조원"].toString(),
+                        "contmat" to doc.data["용기재질"].toString()
                     ))
-
-                    // setting text
-                    date2.text = doc.data["유통기한"].toString()
-                    ml2.text = doc.data["총 내용량"].toString()
-                    cal2.text = doc.data["총 칼로리"].toString()
-                    raw2.text = doc.data["원재료명"].toString()
-                    caution2.text = doc.data["주의사항"].toString()
-                    type2.text = doc.data["식품유형"].toString()
-                    company2.text = doc.data["제조회사"].toString()
-                    manufac2.text = doc.data["제조원"].toString()
-                    contmat2.text = doc.data["용기재질"].toString()
-
-                    // Log.d(TAG, "onCreate: ${doc.data}")
                 }
 
                 for (pd in productList) {
@@ -136,11 +150,15 @@ class LabelInfoActivity : AppCompatActivity() {
                         fat = pd["fat"]?.toFloat() ?: 0F
                         protein = pd["protein"]?.toFloat() ?: 0F
 
-                        Log.d(TAG, "carbo : $carbo")
-                        Log.d(TAG, "suagr : $sugar")
-                        Log.d(TAG, "natrium : $natrium")
-                        Log.d(TAG, "fat : $fat")
-                        Log.d(TAG, "protein : $protein")
+                        date2.text = pd["date"]
+                        ml2.text = pd["ml"]
+                        cal2.text = pd["cal"]
+                        raw2.text = pd["raw"]
+                        caution2.text = pd["caution"]
+                        type2.text = pd["type"]
+                        company2.text = pd["company"]
+                        manufac2.text = pd["manufac"]
+                        contmat2.text = pd["contmat"]
 
                         val entryList = mutableListOf<BarEntry>()
                         entryList.add(BarEntry(4f, carbo))
@@ -156,7 +174,8 @@ class LabelInfoActivity : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error getting documents.", exception)
             }
-    } //onCreate
+    }
+
 
     private fun makeGraph(entryList : List<BarEntry>) {
 
@@ -248,8 +267,6 @@ class LabelInfoActivity : AppCompatActivity() {
             axisLeft.axisMinimum = 0f
             axisLeft.axisMaximum = 100f
             axisRight.axisMinimum = 0f
-
-
         } //barChart
     }
 } // class

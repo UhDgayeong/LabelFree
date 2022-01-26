@@ -13,6 +13,14 @@ class MainActivity : AppCompatActivity() {
         val ciderBtn = findViewById<Button>(R.id.ciderBtn)
         ciderBtn.setOnClickListener {
             val intent = Intent(this, LabelInfoActivity::class.java)
+            intent.putExtra("Name", "칠성사이다 ECO")
+            startActivity(intent)
+        }
+
+        val cokeBtn = findViewById<Button>(R.id.cokeBtn)
+        cokeBtn.setOnClickListener {
+            val intent = Intent(this, LabelInfoActivity::class.java)
+            intent.putExtra("Name", "코카콜라 제로")
             startActivity(intent)
         }
     }
