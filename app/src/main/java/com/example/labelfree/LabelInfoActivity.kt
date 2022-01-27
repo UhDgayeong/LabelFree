@@ -34,6 +34,7 @@ import org.w3c.dom.Text
 import java.util.*
 import kotlin.coroutines.CoroutineContext
 import kotlin.math.ceil
+import kotlin.math.round
 import kotlin.math.roundToInt
 import kotlin.properties.Delegates
 
@@ -161,14 +162,12 @@ class LabelInfoActivity : AppCompatActivity() {
                         manufac2.text = pd["manufac"]
                         contmat2.text = pd["contmat"]
 
-                        Log.d(TAG, "####sugar -> ${ceil(sugar/100)}")
-
                         val entryList = mutableListOf<BarEntry>()
-                        entryList.add(BarEntry(4f, ceil(carbo/324)))
-                        entryList.add(BarEntry(3f, ceil(sugar/100)))
-                        entryList.add(BarEntry(2f, ceil(natrium/2000)))
-                        entryList.add(BarEntry(1f, ceil(fat/54)))
-                        entryList.add(BarEntry(0f, ceil(protein/55)))
+                        entryList.add(BarEntry(4f, round((carbo/324)*100)))
+                        entryList.add(BarEntry(3f, round((sugar/100)*100)))
+                        entryList.add(BarEntry(2f, round((natrium/2000)*100)))
+                        entryList.add(BarEntry(1f, round((fat/54)*100)))
+                        entryList.add(BarEntry(0f, round((protein/55)*100)))
 
                         makeGraph(entryList)
                     }
