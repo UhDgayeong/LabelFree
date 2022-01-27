@@ -7,6 +7,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
+import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import com.github.mikephil.charting.data.BarEntry
@@ -48,6 +50,28 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, LabelInfoActivity::class.java)
             intent.putExtra("Name", selectedItem)
             startActivity(intent)
+        }
+        autoTextView.setOnKeyListener { v, keyCode, event ->
+            when {
+                //Check if it is the Enter-Key,      Check if the Enter Key was pressed down
+                ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) -> {
+                    //perform an action here e.g. a send message button click
+                    //sendButton.performClick()
+                    if (list.contains(autoTextView.text.trim().toString().uppercase(Locale.getDefault()))) {
+                        val intent = Intent(this, LabelInfoActivity::class.java)
+                        intent.putExtra("Name", autoTextView.text.trim().toString().uppercase(Locale.getDefault()))
+                        startActivity(intent)
+                    }
+
+                    else {
+                        Toast.makeText(this, "해당 음료 정보가 존재하지 않아요 :(", Toast.LENGTH_SHORT).show()
+                    }
+
+                    //return true
+                    return@setOnKeyListener true
+                }
+                else -> false
+            }
         }
 
         searchBtn = findViewById(R.id.searchBtn)
