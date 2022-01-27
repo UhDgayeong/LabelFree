@@ -33,6 +33,7 @@ import kotlinx.coroutines.launch
 import org.w3c.dom.Text
 import java.util.*
 import kotlin.coroutines.CoroutineContext
+import kotlin.math.ceil
 import kotlin.math.roundToInt
 import kotlin.properties.Delegates
 
@@ -95,8 +96,8 @@ class LabelInfoActivity : AppCompatActivity() {
 
         val backBtn = findViewById<ImageView>(R.id.backBtn)
         backBtn.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            //val intent = Intent(this, MainActivity::class.java)
+            //startActivity(intent)
             finish()
         }
 
@@ -160,12 +161,14 @@ class LabelInfoActivity : AppCompatActivity() {
                         manufac2.text = pd["manufac"]
                         contmat2.text = pd["contmat"]
 
+                        Log.d(TAG, "####sugar -> ${ceil(sugar/100)}")
+
                         val entryList = mutableListOf<BarEntry>()
-                        entryList.add(BarEntry(4f, carbo))
-                        entryList.add(BarEntry(3f, sugar))
-                        entryList.add(BarEntry(2f, natrium))
-                        entryList.add(BarEntry(1f, fat))
-                        entryList.add(BarEntry(0f, protein))
+                        entryList.add(BarEntry(4f, ceil(carbo/324)))
+                        entryList.add(BarEntry(3f, ceil(sugar/100)))
+                        entryList.add(BarEntry(2f, ceil(natrium/2000)))
+                        entryList.add(BarEntry(1f, ceil(fat/54)))
+                        entryList.add(BarEntry(0f, ceil(protein/55)))
 
                         makeGraph(entryList)
                     }

@@ -20,23 +20,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="422dp" />
+        app:layout_constraintGuide_begin="383dp" />
 
-    <Button
-        android:id="@+id/ciderBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="사이다"
+    <AutoCompleteTextView
+        android:id="@+id/autoTextView"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/autotext_design"
+        android:fontFamily="@font/nanumsquarer"
+        android:hint="무라벨 음료를 검색하세요!"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
-    <Button
-        android:id="@+id/cokeBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="콜라"
-        app:layout_constraintStart_toEndOf="@+id/ciderBtn"
-        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+    <ImageButton
+        android:id="@+id/searchBtn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@color/trans"
+        android:backgroundTint="@color/labelfree_icon_background"
+        app:layout_constraintEnd_toEndOf="@+id/autoTextView"
+        app:layout_constraintTop_toTopOf="@+id/autoTextView"
+        app:srcCompat="@drawable/ic_baseline_search_24_blue"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
