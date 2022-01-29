@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var list : ArrayList<String>
     lateinit var autoTextView : AutoCompleteTextView
     lateinit var searchBtn : ImageButton
+    lateinit var instaImg : ImageView
 
     val TAG = "MainActivity"
 
@@ -85,6 +87,14 @@ class MainActivity : AppCompatActivity() {
             else {
                 Toast.makeText(this, "해당 음료 정보가 존재하지 않아요 :(", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        instaImg = findViewById(R.id.instaImg)
+        instaImg.setOnClickListener {
+            val uri = Uri.parse("http://instagram.com/labelfree_haram")
+            val likeIng = Intent(Intent.ACTION_VIEW, uri)
+            //likeIng.setPackage("com.instagram.android")
+            startActivity(likeIng)
         }
 
     }
