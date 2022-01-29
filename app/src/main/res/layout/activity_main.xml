@@ -12,14 +12,15 @@
         layout="@layout/toolbar" />
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="250dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="24dp"
         android:src="@drawable/labery_inmain_1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/autoTextView" />
 
@@ -27,8 +28,8 @@
         android:id="@+id/autoTextView"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginTop="40dp"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/autotext_design"
         android:fontFamily="@font/nanumsquarer"
@@ -38,6 +39,7 @@
         android:maxLines="1"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include" />
 
@@ -51,6 +53,17 @@
         app:layout_constraintTop_toTopOf="@+id/autoTextView"
         app:srcCompat="@drawable/ic_baseline_search_24_blue"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <ImageView
+        android:id="@+id/instaImg"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:src="@drawable/labery_instagram"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
