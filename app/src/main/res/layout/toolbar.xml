@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_baseline_menu_24_blue" />
+            android:src="@drawable/ic_round_menu_24_blue" />
 
 
         <ImageView
