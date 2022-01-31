@@ -23,7 +23,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var list : ArrayList<String>
     lateinit var autoTextView : AutoCompleteTextView
     lateinit var searchBtn : ImageButton
-    lateinit var instaImg : ImageView
+    lateinit var instaBtn : Button
+    lateinit var infoBtn : ImageButton
 
     val TAG = "MainActivity"
 
@@ -89,12 +90,18 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        instaImg = findViewById(R.id.instaImg)
-        instaImg.setOnClickListener {
+        instaBtn = findViewById(R.id.instaBtn)
+        instaBtn.setOnClickListener {
             val uri = Uri.parse("http://instagram.com/labelfree_haram")
             val likeIng = Intent(Intent.ACTION_VIEW, uri)
             //likeIng.setPackage("com.instagram.android")
             startActivity(likeIng)
+        }
+
+        infoBtn = findViewById(R.id.infoBtn)
+        infoBtn.setOnClickListener {
+            val intent = Intent(this, AboutAppActivity::class.java)
+            startActivity(intent)
         }
 
     }

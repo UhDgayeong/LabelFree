@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.labelfree">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,6 +11,9 @@
         android:roundIcon="@mipmap/labelfree_icon_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LabelFree">
+        <activity
+            android:name=".AboutAppActivity"
+            android:exported="false" />
         <activity
             android:name=".LabelInfoActivity"
             android:exported="false" />
@@ -25,7 +28,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>

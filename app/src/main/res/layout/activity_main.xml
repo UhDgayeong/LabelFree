@@ -11,19 +11,6 @@
         android:id="@+id/include"
         layout="@layout/toolbar" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="24dp"
-        android:src="@drawable/labery_inmain"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/autoTextView" />
-
     <AutoCompleteTextView
         android:id="@+id/autoTextView"
         android:layout_width="match_parent"
@@ -58,14 +45,14 @@
     <ImageView
         android:id="@+id/instaImg"
         android:layout_width="match_parent"
-        android:layout_height="280dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="350dp"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="24dp"
         android:src="@drawable/labery_instagram"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/autoTextView" />
 
     <ImageButton
         android:id="@+id/infoBtn"
@@ -79,6 +66,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_round_info_24" />
+
+    <Button
+        android:id="@+id/instaBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/btn_style"
+        android:fontFamily="@font/nanumgothicbold"
+        android:text="라벨프리 인스타그램 바로가기 >>"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/instaImg" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

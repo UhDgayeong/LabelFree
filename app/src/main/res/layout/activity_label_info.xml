@@ -308,6 +308,7 @@
                 android:fontFamily="@font/nanumsquarer"
                 android:text="표의 값은 1일 영양성분 기준치 대비 함량 값입니다"
                 android:textSize="10sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/chart" />
         </androidx.constraintlayout.widget.ConstraintLayout>
