@@ -5,15 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/background_img"
     tools:context=".LabelInfoActivity">
 
     <include layout="@layout/toolbar2" />
 
 
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:adSize="BANNER"
+        app:adUnitId="@string/banner_id_test" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linearLayout"
@@ -71,8 +80,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginEnd="24dp"
                 android:layout_marginTop="80dp"
+                android:layout_marginEnd="24dp"
                 android:fontFamily="@font/nanumsquarer"
                 android:textColor="@color/black"
                 android:textSize="16sp"
@@ -298,7 +307,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_begin="113dp" />
+                app:layout_constraintGuide_end="305dp" />
 
             <TextView
                 android:id="@+id/textView"
@@ -311,8 +320,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/chart" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </ScrollView>
 
+    </ScrollView>
 </LinearLayout>

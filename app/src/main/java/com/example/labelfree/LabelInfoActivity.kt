@@ -22,6 +22,9 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.shadow.ShadowRenderer
 import com.google.firebase.firestore.ktx.firestore
@@ -66,6 +69,8 @@ class LabelInfoActivity : AppCompatActivity() {
     lateinit var manufac2 : TextView
     lateinit var contmat2 : TextView
 
+    lateinit var mAdView : AdView
+
     private lateinit var docName : String
 
     val productList = ArrayList<Map<String, String>>()
@@ -73,6 +78,12 @@ class LabelInfoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_label_info)
+
+        MobileAds.initialize(this) {}
+
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
         docName = intent.getStringExtra("Name").toString()
 

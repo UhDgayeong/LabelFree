@@ -10,9 +10,4 @@
         android:fontStyle="normal"
         android:fontWeight="400"
         android:font="@font/nanumgothicbold"/>
-
-    <font
-        android:fontStyle="normal"
-        android:fontWeight="400"
-        android:font="@font/hanahand"/>
 </font-family>

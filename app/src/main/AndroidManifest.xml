@@ -11,6 +11,12 @@
         android:roundIcon="@mipmap/labelfree_icon_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LabelFree">
+
+        <!-- play-services-ads 17.0.0 이상은 앱 ID 입력 필요 -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/app_ad_id"/>
+
         <activity
             android:name=".AboutAppActivity"
             android:exported="false" />
@@ -27,6 +33,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:hardwareAccelerated="true"
             android:name=".MainActivity"
             android:exported="true" />
     </application>

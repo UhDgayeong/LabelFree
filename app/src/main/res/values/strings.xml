@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">라벨프리</string>
+    <string name="app_ad_id">ca-app-pub-2575420979476430~3058620050</string>
+    <string name="banner_id">ca-app-pub-2575420979476430/9901222398</string>
+    <string name="banner_id_test">ca-app-pub-3940256099942544/6300978111</string>
 </resources>

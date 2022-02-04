@@ -13,6 +13,9 @@ import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import com.github.mikephil.charting.data.BarEntry
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.*
@@ -25,12 +28,19 @@ class MainActivity : AppCompatActivity() {
     lateinit var searchBtn : ImageButton
     lateinit var instaBtn : Button
     lateinit var infoBtn : ImageButton
+    lateinit var mAdView : AdView
 
     val TAG = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        MobileAds.initialize(this) {}
+
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
         list = SplashActivity.list
 
