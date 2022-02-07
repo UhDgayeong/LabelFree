@@ -18,9 +18,11 @@
             android:value="@string/app_ad_id"/>
 
         <activity
+            android:hardwareAccelerated="true"
             android:name=".AboutAppActivity"
             android:exported="false" />
         <activity
+            android:hardwareAccelerated="true"
             android:name=".LabelInfoActivity"
             android:exported="false" />
         <activity

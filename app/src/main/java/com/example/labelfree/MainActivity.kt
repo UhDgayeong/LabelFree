@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 
         autoTextView = findViewById(R.id.autoTextView)
 
-        val str = "'${list[rand(0, listSize)]}'를 검색해 보세요!"
+        val str = "'${list[rand(0, listSize)]}'를(을) 검색해 보세요!"
 
         autoTextView.hint = str
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, list)

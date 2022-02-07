@@ -68,6 +68,7 @@ class LabelInfoActivity : AppCompatActivity() {
     lateinit var company2 : TextView
     lateinit var manufac2 : TextView
     lateinit var contmat2 : TextView
+    lateinit var source : TextView
 
     lateinit var mAdView : AdView
 
@@ -122,6 +123,7 @@ class LabelInfoActivity : AppCompatActivity() {
         company2 = findViewById(R.id.company2)
         manufac2 = findViewById(R.id.manufac2)
         contmat2 = findViewById(R.id.contmat2)
+        source = findViewById(R.id.sourceTxt)
 
 
         getData()
@@ -148,7 +150,8 @@ class LabelInfoActivity : AppCompatActivity() {
                         "type" to doc.data["식품유형"].toString(),
                         "company" to doc.data["제조회사"].toString(),
                         "manufac" to doc.data["제조원"].toString(),
-                        "contmat" to doc.data["용기재질"].toString()
+                        "contmat" to doc.data["용기재질"].toString(),
+                        "source" to doc.data["출처"].toString()
                     ))
                 }
 
@@ -172,6 +175,7 @@ class LabelInfoActivity : AppCompatActivity() {
                         company2.text = pd["company"]
                         manufac2.text = pd["manufac"]
                         contmat2.text = pd["contmat"]
+                        source.text = "출처 : ${pd["source"]}"
 
                         val entryList = mutableListOf<BarEntry>()
                         entryList.add(BarEntry(4f, round((carbo/324)*100)))
