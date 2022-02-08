@@ -1,8 +1,10 @@
-package com.example.labelfree
+package com.haram.labelfree
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
+import com.haram.labelfree.R
+
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds

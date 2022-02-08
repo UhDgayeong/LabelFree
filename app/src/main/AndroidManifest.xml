@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.labelfree">
+    package="com.haram.labelfree">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -19,14 +19,14 @@
 
         <activity
             android:hardwareAccelerated="true"
-            android:name=".AboutAppActivity"
+            android:name="com.haram.labelfree.AboutAppActivity"
             android:exported="false" />
         <activity
             android:hardwareAccelerated="true"
-            android:name=".LabelInfoActivity"
+            android:name="com.haram.labelfree.LabelInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".SplashActivity"
+            android:name="com.haram.labelfree.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,7 +36,7 @@
         </activity>
         <activity
             android:hardwareAccelerated="true"
-            android:name=".MainActivity"
+            android:name="com.haram.labelfree.MainActivity"
             android:exported="true" />
     </application>
 

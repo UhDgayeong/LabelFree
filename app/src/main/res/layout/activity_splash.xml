@@ -6,6 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/labelfree_splash"
-    tools:context=".SplashActivity">
+    tools:context="com.haram.labelfree.SplashActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

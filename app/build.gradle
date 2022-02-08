@@ -8,7 +8,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "com.example.labelfree"
+        applicationId "com.haram.labelfree"
         minSdk 23
         targetSdk 31
         versionCode 1
