@@ -17,7 +17,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         app:adSize="BANNER"
-        app:adUnitId="@string/banner_id_test" />
+        app:adUnitId="@string/banner_id" />
 
     <ScrollView
         android:layout_width="match_parent"
