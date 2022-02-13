@@ -222,8 +222,8 @@ class LabelInfoActivity : AppCompatActivity() {
             legend.isEnabled = false
 
             //X, Y 바의 애니메이션 효과
-            animateY(1500)
-            animateX(1500)
+            animateY(2000)
+            //animateX(2000)
 
             xAxis.apply {
                 //xAxis, yAxis 둘다 존재하여 따로 설정이 가능합니다
