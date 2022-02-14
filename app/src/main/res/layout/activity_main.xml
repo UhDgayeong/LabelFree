@@ -24,7 +24,8 @@
         android:imeOptions="actionSearch"
         android:inputType="text"
         android:maxLines="1"
-        android:textSize="14sp"
+        android:paddingEnd="70dp"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,15 +33,16 @@
 
     <ImageButton
         android:id="@+id/searchBtn"
-        android:layout_width="48dp"
+        android:layout_width="30dp"
         android:layout_height="48dp"
 
+        android:layout_marginEnd="10dp"
         android:background="@color/trans"
         android:backgroundTint="@color/labelfree_icon_background"
         app:layout_constraintEnd_toEndOf="@+id/autoTextView"
         app:layout_constraintTop_toTopOf="@+id/autoTextView"
         app:srcCompat="@drawable/ic_baseline_search_24_blue"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <ImageView
         android:id="@+id/instaImg"
@@ -91,5 +93,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/clearBtn"
+        android:layout_width="20dp"
+        android:layout_height="48dp"
+        android:background="@color/trans"
+        android:contentDescription="clearbutton"
+        app:layout_constraintEnd_toStartOf="@+id/searchBtn"
+        app:layout_constraintTop_toTopOf="@+id/autoTextView"
+        app:srcCompat="@drawable/ic_round_clear_24"
+        tools:ignore="TouchTargetSizeCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

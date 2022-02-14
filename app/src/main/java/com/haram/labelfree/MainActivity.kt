@@ -1,12 +1,17 @@
 package com.haram.labelfree
 
 import android.content.Intent
+import android.media.Image
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
+import android.view.View
 import android.widget.*
+import androidx.core.widget.addTextChangedListener
 import com.haram.labelfree.R
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
@@ -22,12 +27,16 @@ class MainActivity : AppCompatActivity() {
     lateinit var instaBtn : Button
     lateinit var infoBtn : ImageButton
     lateinit var mAdView : AdView
+    lateinit var clearBtn : ImageButton
 
     val TAG = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        clearBtn = findViewById(R.id.clearBtn)
+        clearBtn.visibility = View.INVISIBLE
 
         MobileAds.initialize(this) {}
 
@@ -43,6 +52,26 @@ class MainActivity : AppCompatActivity() {
 
 
         autoTextView = findViewById(R.id.autoTextView)
+        clearBtn.setOnClickListener {
+            autoTextView.text = null
+        }
+
+        autoTextView.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                clearBtn.visibility = View.VISIBLE
+                if (autoTextView.text.isBlank()) {
+                    clearBtn.visibility = View.INVISIBLE
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                clearBtn.visibility = View.INVISIBLE
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                clearBtn.visibility = View.VISIBLE
+            }
+        })
 
         val str = "'${list[rand(0, listSize)]}'를(을) 검색해 보세요!"
 
