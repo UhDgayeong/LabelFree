@@ -33,7 +33,7 @@
 
     <ImageButton
         android:id="@+id/searchBtn"
-        android:layout_width="30dp"
+        android:layout_width="35dp"
         android:layout_height="48dp"
 
         android:layout_marginEnd="10dp"
@@ -96,7 +96,7 @@
 
     <ImageButton
         android:id="@+id/clearBtn"
-        android:layout_width="20dp"
+        android:layout_width="25dp"
         android:layout_height="48dp"
         android:background="@color/trans"
         android:contentDescription="clearbutton"

@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("Name", selectedItem)
             startActivity(intent)
         }
-        autoTextView.setOnKeyListener { v, keyCode, event ->
+        autoTextView.setOnKeyListener { _, keyCode, event ->
             when {
                 //Check if it is the Enter-Key,      Check if the Enter Key was pressed down
                 ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) -> {
