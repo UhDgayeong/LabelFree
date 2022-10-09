@@ -1,4 +1,4 @@
-package com.haram.labelfree.ui
+package com.haram.labelfree.ui.view
 
 import android.content.Intent
 import android.net.Uri
@@ -10,15 +10,20 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.widget.*
+import androidx.activity.viewModels
+import androidx.databinding.DataBindingUtil
 import com.haram.labelfree.R
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import com.haram.labelfree.databinding.ActivityMainBinding
+import com.haram.labelfree.ui.viewmodel.DrinkViewModel
 import java.util.*
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
     lateinit var list : ArrayList<String>
     lateinit var autoTextView : AutoCompleteTextView
     lateinit var searchBtn : ImageButton
@@ -27,11 +32,15 @@ class MainActivity : AppCompatActivity() {
     lateinit var mAdView : AdView
     lateinit var clearBtn : ImageButton
 
+    val viewModel: DrinkViewModel by viewModels()
+
     val TAG = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         clearBtn = findViewById(R.id.clearBtn)
         clearBtn.visibility = View.INVISIBLE

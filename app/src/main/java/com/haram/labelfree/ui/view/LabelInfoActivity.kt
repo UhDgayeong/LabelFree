@@ -1,4 +1,4 @@
-package com.haram.labelfree.ui
+package com.haram.labelfree.ui.view
 
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity

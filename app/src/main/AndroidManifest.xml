@@ -19,14 +19,14 @@
 
         <activity
             android:hardwareAccelerated="true"
-            android:name="com.haram.labelfree.ui.AboutAppActivity"
+            android:name="com.haram.labelfree.ui.view.AboutAppActivity"
             android:exported="false" />
         <activity
             android:hardwareAccelerated="true"
-            android:name="com.haram.labelfree.ui.LabelInfoActivity"
+            android:name="com.haram.labelfree.ui.view.LabelInfoActivity"
             android:exported="false" />
         <activity
-            android:name="com.haram.labelfree.ui.SplashActivity"
+            android:name="com.haram.labelfree.ui.view.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,7 +36,7 @@
         </activity>
         <activity
             android:hardwareAccelerated="true"
-            android:name="com.haram.labelfree.ui.MainActivity"
+            android:name="com.haram.labelfree.ui.view.MainActivity"
             android:exported="true" />
     </application>
 
