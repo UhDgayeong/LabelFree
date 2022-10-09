@@ -1,7 +1,6 @@
-package com.haram.labelfree
+package com.haram.labelfree.ui
 
 import android.content.Intent
-import android.media.Image
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,7 +10,6 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.widget.*
-import androidx.core.widget.addTextChangedListener
 import com.haram.labelfree.R
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView

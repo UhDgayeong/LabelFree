@@ -1,4 +1,4 @@
-package com.haram.labelfree
+package com.haram.labelfree.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

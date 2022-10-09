@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.haram.labelfree.LabelInfoActivity">
+    tools:context="com.haram.labelfree.ui.LabelInfoActivity">
 
     <include layout="@layout/toolbar2" />
 
@@ -17,7 +17,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         app:adSize="BANNER"
-        app:adUnitId="@string/banner_id" />
+        app:adUnitId="@string/banner_id_test" />
 
     <ScrollView
         android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.haram.labelfree
+package com.haram.labelfree.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.WindowManager
-import com.haram.labelfree.R
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.haram.labelfree.R
 
 class SplashActivity : AppCompatActivity() {
 

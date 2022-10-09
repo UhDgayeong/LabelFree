@@ -19,7 +19,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         app:adSize="BANNER"
-        app:adUnitId="@string/banner_id" />
+        app:adUnitId="@string/banner_id_test" />
 
 <ScrollView
     android:layout_width="match_parent"
@@ -30,7 +30,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="com.haram.labelfree.AboutAppActivity">
+    tools:context="com.haram.labelfree.ui.AboutAppActivity">
 
 
 
