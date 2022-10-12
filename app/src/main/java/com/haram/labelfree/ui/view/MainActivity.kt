@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        viewModel.reload()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         clearBtn = findViewById(R.id.clearBtn)
