@@ -18,8 +18,10 @@ import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.haram.labelfree.databinding.ActivityMainBinding
 import com.haram.labelfree.ui.viewmodel.DrinkViewModel
+import kotlinx.coroutines.runBlocking
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var clearBtn : ImageButton
 
     val viewModel: DrinkViewModel by viewModels()
+    private lateinit var drinksList: MutableSet<String>
 
     val TAG = "MainActivity"
 
@@ -40,7 +43,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewModel.reload()
+        runBlocking {
+            getRepoData()
+        }
+
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         clearBtn = findViewById(R.id.clearBtn)
@@ -144,6 +151,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+    }
+
+    private suspend fun getRepoData() {
+        viewModel.reload()
     }
 
     private fun rand(from: Int, to: Int) : Int {
