@@ -1,5 +1,6 @@
 package com.haram.labelfree.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.haram.labelfree.data.DrinkRepository
 
@@ -11,8 +12,7 @@ class DrinkViewModel : ViewModel() {
         repository.getFirebaseData()
     }
 
-    // 임시.. 테스트
-    fun getData() {
-        repository.getData()
+    fun getData(): ArrayList<String> {
+        return repository.getData()
     }
 }

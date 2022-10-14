@@ -12,18 +12,8 @@ import com.haram.labelfree.R
 
 class SplashActivity : AppCompatActivity() {
 
-    //lateinit var list : ArrayList<String>
-    val TAG = "SplashActivity"
-
-    companion object {
-        lateinit var list : ArrayList<String>
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        list = ArrayList()
-        settingList()
 
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_splash)
@@ -35,23 +25,6 @@ class SplashActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }, 3000)
-    }
-
-    private fun settingList() {
-        val db = Firebase.firestore
-        db.collection("drinks")
-            .get()
-            .addOnSuccessListener { result ->
-                for (doc in result) {
-                    list.add(doc.data["제품명"].toString())
-                    println("########## added!")
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents.", exception)
-            }
-
-        println("the size is .. ${list.size}")
     }
 
     override fun onBackPressed() {

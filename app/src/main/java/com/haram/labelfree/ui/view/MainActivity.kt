@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var clearBtn : ImageButton
 
     val viewModel: DrinkViewModel by viewModels()
-    private lateinit var drinksList: MutableSet<String>
 
     val TAG = "MainActivity"
 
@@ -44,7 +43,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         runBlocking {
-            getRepoData()
+            //getRepoData()
+            viewModel.reload()
+            list = viewModel.getData()
         }
 
 
@@ -59,8 +60,7 @@ class MainActivity : AppCompatActivity() {
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
 
-        list = SplashActivity.list
-
+        //list = SplashActivity.list
         //list = intent.getStringArrayListExtra("list") as ArrayList<String>
         val listSize = list.size
         Log.d(TAG, "the size is ... ${listSize}")
@@ -151,10 +151,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-    }
-
-    private suspend fun getRepoData() {
-        viewModel.reload()
     }
 
     private fun rand(from: Int, to: Int) : Int {

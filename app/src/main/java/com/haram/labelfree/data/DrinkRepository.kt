@@ -1,7 +1,7 @@
 package com.haram.labelfree.data
 
 import android.util.Log
-import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
@@ -15,15 +15,29 @@ class DrinkRepository {
 //        getData()
 //    }
 
-    private var drinkDocs = arrayListOf<String>()
+    private var drinkDocNames = arrayListOf<String>()
     //private var drinkDocs = HashMap<String, Map<String, Any>>()
 
-    suspend fun getFirebaseData(): MutableList<DocumentSnapshot> {
+    suspend fun getFirebaseData(): Boolean {
         // placesRef : db.collection 인듯. 여기다 .get().addOn리스너 있어서..
 
-        val snapshot = db.collection("drinks").get().await()
-        Log.d("doctest", snapshot.documents.toString())
-        return snapshot.documents
+        return try {
+            val snapshot = db.collection("drinks").get().await()
+            //Log.d("doctest", snapshot.documents.toString())
+            //Log.d("doctest", snapshot.documents.get(0).toString())
+
+            for (doc in snapshot.documents) {
+                // 전체 데이터 : Log.d("testingDoc", doc.data.toString())
+                Log.d("testingDoc", doc.data?.get("제품명") as String)
+                drinkDocNames.add(doc.data!!.get("제품명") as String)
+            }
+
+            true
+        } catch (e: FirebaseFirestoreException) {
+            Log.e("doctest", "ErrorE:" + e.message.toString())
+            false
+        }
+
 
 //        db.collection("drinks")
 //            .get()
@@ -45,8 +59,8 @@ class DrinkRepository {
     }
 
     fun getData(): ArrayList<String> {
-        Log.d("testingggg", drinkDocs.toString())
-        return drinkDocs
+        Log.d("testingggg", drinkDocNames.toString())
+        return drinkDocNames
     }
 
 }
