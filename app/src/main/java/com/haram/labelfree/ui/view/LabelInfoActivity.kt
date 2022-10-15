@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.viewModels
+import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.haram.labelfree.R
 import com.github.mikephil.charting.charts.HorizontalBarChart
@@ -22,11 +24,15 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import com.haram.labelfree.databinding.ActivityLabelInfoBinding
+import com.haram.labelfree.ui.viewmodel.DrinkViewModel
+import kotlinx.coroutines.runBlocking
 import java.util.*
 import kotlin.math.round
 
 class LabelInfoActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityLabelInfoBinding
     private val TAG = "LabelInfoTest"
     private val db = Firebase.firestore
 
@@ -60,22 +66,43 @@ class LabelInfoActivity : AppCompatActivity() {
 
     val productList = ArrayList<Map<String, String>>()
 
+    val viewModel: DrinkViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_label_info)
+        binding = DataBindingUtil.setContentView<ActivityLabelInfoBinding>(this, R.layout.activity_label_info)
 
+        docName = intent.getStringExtra("Name").toString() // 메인액티비티에서 검색한 것
+        viewModel.getDrinkInfoMap(docName)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+        //binding.viewModel.getDrinkInfoMap(docName)
+
+//        runBlocking {
+//            //getRepoData()
+//            //viewModel.reload()
+//            binding.viewModel = viewModel
+//        }
+
+
+
+        //viewModel.getDrinkInfoMap(docName)
+        //viewModel.productMap = viewModel.getDrinkInfoMap(docName)
+
+
+
+        //val storageRef = Firebase.storage.reference.child(docName + ".png")
+        val storageRef = viewModel.getDrinkImgRef(docName)
+
+        // Ad
         MobileAds.initialize(this) {}
-
         mAdView = findViewById(R.id.adView)
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
 
-        docName = intent.getStringExtra("Name").toString()
-
-        val storageRef = Firebase.storage.reference.child(docName + ".png")
 
         nameTxt = findViewById(R.id.nameTxt)
-        nameTxt.text = docName
+        //nameTxt.text = docName
 
         image = findViewById(R.id.image)
         storageRef.downloadUrl.addOnCompleteListener(OnCompleteListener { task ->

@@ -21,7 +21,6 @@ import com.haram.labelfree.ui.viewmodel.DrinkViewModel
 import kotlinx.coroutines.runBlocking
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,16 +39,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         runBlocking {
             //getRepoData()
             viewModel.reload()
-            list = viewModel.getData()
+            list = viewModel.getDrinkNameList()
         }
-
-
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         clearBtn = findViewById(R.id.clearBtn)
         clearBtn.visibility = View.INVISIBLE
