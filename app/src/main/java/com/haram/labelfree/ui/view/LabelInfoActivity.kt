@@ -73,17 +73,20 @@ class LabelInfoActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView<ActivityLabelInfoBinding>(this, R.layout.activity_label_info)
 
         docName = intent.getStringExtra("Name").toString() // 메인액티비티에서 검색한 것
-        viewModel.getDrinkInfoMap(docName)
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = this
+        //binding.viewModel = viewModel // 이 화면의 뷰모델은 DrinkViewModel이야~
+
+        binding.lifecycleOwner = this // LiveData를 Databinding으로 쓸 경우 써 줘야 함
         //binding.viewModel.getDrinkInfoMap(docName)
 
-//        runBlocking {
-//            //getRepoData()
-//            //viewModel.reload()
-//            binding.viewModel = viewModel
-//        }
+        runBlocking {
+            //getRepoData()
+            //viewModel.reload()
+            viewModel.getDrinkInfoMap(docName)
+            //binding.viewModel = viewModel
+        }
 
+        binding.viewModel = viewModel
+        Log.d("pmTesting", viewModel.productMap.toString())
 
 
         //viewModel.getDrinkInfoMap(docName)
@@ -125,20 +128,28 @@ class LabelInfoActivity : AppCompatActivity() {
             finish()
         }
 
-        date2 = findViewById(R.id.date2)
-        ml2 = findViewById(R.id.ml2)
-        cal2 = findViewById(R.id.cal2)
-        raw2 = findViewById(R.id.raw2)
-        caution2 = findViewById(R.id.caution2)
-        type2 = findViewById(R.id.type2)
-        company2 = findViewById(R.id.company2)
-        manufac2 = findViewById(R.id.manufac2)
-        contmat2 = findViewById(R.id.contmat2)
-        source = findViewById(R.id.sourceTxt)
-
-
-        getData()
+        getGraphData()
     } //onCreate
+
+    private fun getGraphData() {
+        val entryList = mutableListOf<BarEntry>()
+
+        Log.d("carbotest", viewModel.productMap["carbo"]?.toString() ?: "empty")
+        Log.d("testViewmodel", viewModel.productMap.toString())
+        carbo = viewModel.productMap["carbo"]?.toFloat() ?: 0F
+        sugar = viewModel.productMap["sugar"]?.toFloat() ?: 0F
+        natrium = viewModel.productMap["natrium"]?.toFloat() ?: 0F
+        fat = viewModel.productMap["fat"]?.toFloat() ?: 0F
+        protein = viewModel.productMap["protein"]?.toFloat() ?: 0F
+
+        entryList.add(BarEntry(4f, round((carbo/324)*100)))
+        entryList.add(BarEntry(3f, round((sugar/100)*100)))
+        entryList.add(BarEntry(2f, round((natrium/2000)*100)))
+        entryList.add(BarEntry(1f, round((fat/54)*100)))
+        entryList.add(BarEntry(0f, round((protein/55)*100)))
+
+        makeGraph(entryList)
+    }
 
     private fun getData() {
         db.collection("drinks")

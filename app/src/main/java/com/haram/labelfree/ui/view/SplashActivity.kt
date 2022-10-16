@@ -21,10 +21,9 @@ class SplashActivity : AppCompatActivity() {
         Handler().postDelayed({
             val intent = Intent(this, MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-            //intent.putExtra("list", list as ArrayList<String>)
             startActivity(intent)
             finish()
-        }, 3000)
+        }, 1000)
     }
 
     override fun onBackPressed() {

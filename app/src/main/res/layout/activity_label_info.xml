@@ -53,7 +53,7 @@
 
                 <TextView
                     android:id="@+id/nameTxt"
-                    android:text="@{viewModel.productMap[`제품명`]}"
+                    android:text="@{viewModel.productMap[`productName`]}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
@@ -92,6 +92,7 @@
 
                 <TextView
                     android:id="@+id/date2"
+                    android:text="@{viewModel.productMap[`date`]}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -117,6 +118,7 @@
 
                 <TextView
                     android:id="@+id/ml2"
+                    android:text="@{viewModel.productMap[`ml`]}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -145,6 +147,7 @@
 
                 <TextView
                     android:id="@+id/cal2"
+                    android:text="@{viewModel.productMap[`cal`]}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -170,6 +173,7 @@
 
                 <TextView
                     android:id="@+id/raw2"
+                    android:text="@{viewModel.productMap[`raw`]}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -195,6 +199,7 @@
 
                 <TextView
                     android:id="@+id/caution2"
+                    android:text="@{viewModel.productMap[`caution`]}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -220,6 +225,7 @@
 
                 <TextView
                     android:id="@+id/type2"
+                    android:text="@{viewModel.productMap[`type`]}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -245,6 +251,7 @@
 
                 <TextView
                     android:id="@+id/company2"
+                    android:text="@{viewModel.productMap[`company`]}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -270,6 +277,7 @@
 
                 <TextView
                     android:id="@+id/manufac2"
+                    android:text="@{viewModel.productMap[`manufac`]}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -295,6 +303,7 @@
 
                 <TextView
                     android:id="@+id/contmat2"
+                    android:text="@{viewModel.productMap[`contmat`]}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"

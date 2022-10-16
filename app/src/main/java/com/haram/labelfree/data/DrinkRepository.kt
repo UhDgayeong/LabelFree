@@ -14,7 +14,6 @@ class DrinkRepository {
 
     private var drinkDocNames = arrayListOf<String>() // 제품명 리스트
     private var drinkMap = mapOf<String, String>()
-    //private var drinkDocs = HashMap<String, Map<String, Any>>()
 
     suspend fun getFirebaseData(): Boolean {
 
@@ -37,39 +36,38 @@ class DrinkRepository {
     }
 
     fun getDrinkNameList(): ArrayList<String> {
-        Log.d("testingggg", drinkDocNames.toString())
         return drinkDocNames
     }
 
-    fun getDrinkInfo(docName: String) {
-        db.collection("drinks")
-            .whereEqualTo("제품명", docName)
-            .get()
-            .addOnSuccessListener { result ->
-                for (doc in result) {
-                    drinkMap = mapOf(
-                        "productName" to doc.data["제품명"].toString(),
-                        "carbo" to doc.data["탄수화물"].toString(),
-                        "sugar" to doc.data["당류"].toString(),
-                        "natrium" to doc.data["나트륨"].toString(),
-                        "fat" to doc.data["지방"].toString(),
-                        "protein" to doc.data["단백질"].toString(),
-                        "date" to doc.data["유통기한"].toString(),
-                        "ml" to doc.data["총 내용량"].toString(),
-                        "cal" to doc.data["총 칼로리"].toString(),
-                        "raw" to doc.data["원재료명"].toString(),
-                        "caution" to doc.data["주의사항"].toString(),
-                        "type" to doc.data["식품유형"].toString(),
-                        "company" to doc.data["제조회사"].toString(),
-                        "manufac" to doc.data["제조원"].toString(),
-                        "contmat" to doc.data["용기재질"].toString(),
-                        "source" to doc.data["출처"].toString()
-                    )
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.w("RepoError", "Error getting documents.", exception)
-            }
+    suspend fun getDrinkInfo(docName: String): Boolean {
+
+        return try {
+            val snapshot = db.collection("drinks").document(docName).get().await()
+
+            drinkMap = mapOf(
+                "productName" to snapshot.get("제품명").toString(),
+                "carbo" to snapshot.get("탄수화물").toString(),
+                "sugar" to snapshot.get("당류").toString(),
+                "natrium" to snapshot.get("나트륨").toString(),
+                "fat" to snapshot.get("지방").toString(),
+                "protein" to snapshot.get("단백질").toString(),
+                "date" to snapshot.get("유통기한").toString(),
+                "ml" to snapshot.get("총 내용량").toString(),
+                "cal" to snapshot.get("총 칼로리").toString(),
+                "raw" to snapshot.get("원재료명").toString(),
+                "caution" to snapshot.get("주의사항").toString(),
+                "type" to snapshot.get("식품유형").toString(),
+                "company" to snapshot.get("제조회사").toString(),
+                "manufac" to snapshot.get("제조원").toString(),
+                "contmat" to snapshot.get("용기재질").toString(),
+                "source" to snapshot.get("출처").toString()
+            )
+
+            true
+        } catch (e: FirebaseFirestoreException) {
+            Log.e("fbError", "ErrorE: " + e.message.toString())
+            false
+        }
     }
 
     fun getDrinkInfoMap(): Map<String, String> {
