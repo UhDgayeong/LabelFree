@@ -47,24 +47,10 @@ class LabelInfoActivity : AppCompatActivity() {
 
     lateinit var barChart : HorizontalBarChart
     lateinit var image : ImageView
-    lateinit var nameTxt : TextView
-
-    lateinit var date2 : TextView
-    lateinit var ml2 : TextView
-    lateinit var cal2 : TextView
-    lateinit var raw2 : TextView
-    lateinit var caution2 : TextView
-    lateinit var type2 : TextView
-    lateinit var company2 : TextView
-    lateinit var manufac2 : TextView
-    lateinit var contmat2 : TextView
-    lateinit var source : TextView
 
     lateinit var mAdView : AdView
 
     private lateinit var docName : String
-
-    val productList = ArrayList<Map<String, String>>()
 
     val viewModel: DrinkViewModel by viewModels()
 
@@ -103,23 +89,17 @@ class LabelInfoActivity : AppCompatActivity() {
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
 
-
-        nameTxt = findViewById(R.id.nameTxt)
-        //nameTxt.text = docName
-
         image = findViewById(R.id.image)
-        storageRef.downloadUrl.addOnCompleteListener(OnCompleteListener { task ->
+        storageRef.downloadUrl.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 Glide.with(this)
                     .load(task.result)
                     .into(image)
             }
-        })
+        }
 
         barChart = findViewById(R.id.chart)
         barChart.setNoDataText("")
-
-        //val productList = ArrayList<Map<String, String>>()
 
         val backBtn = findViewById<ImageView>(R.id.backBtn)
         backBtn.setOnClickListener {
@@ -134,7 +114,7 @@ class LabelInfoActivity : AppCompatActivity() {
     private fun getGraphData() {
         val entryList = mutableListOf<BarEntry>()
 
-        Log.d("carbotest", viewModel.productMap["carbo"]?.toString() ?: "empty")
+        Log.d("carbotest", viewModel.productMap["carbo"] ?: "empty")
         Log.d("testViewmodel", viewModel.productMap.toString())
         carbo = viewModel.productMap["carbo"]?.toFloat() ?: 0F
         sugar = viewModel.productMap["sugar"]?.toFloat() ?: 0F
@@ -150,71 +130,6 @@ class LabelInfoActivity : AppCompatActivity() {
 
         makeGraph(entryList)
     }
-
-    private fun getData() {
-        db.collection("drinks")
-            .whereEqualTo("제품명", docName)
-            .get()
-            .addOnSuccessListener { result ->
-                for (doc in result) {
-                    productList.add(mapOf(
-                        "productName" to doc.data["제품명"].toString(),
-                        "carbo" to doc.data["탄수화물"].toString(),
-                        "sugar" to doc.data["당류"].toString(),
-                        "natrium" to doc.data["나트륨"].toString(),
-                        "fat" to doc.data["지방"].toString(),
-                        "protein" to doc.data["단백질"].toString(),
-                        "date" to doc.data["유통기한"].toString(),
-                        "ml" to doc.data["총 내용량"].toString(),
-                        "cal" to doc.data["총 칼로리"].toString(),
-                        "raw" to doc.data["원재료명"].toString(),
-                        "caution" to doc.data["주의사항"].toString(),
-                        "type" to doc.data["식품유형"].toString(),
-                        "company" to doc.data["제조회사"].toString(),
-                        "manufac" to doc.data["제조원"].toString(),
-                        "contmat" to doc.data["용기재질"].toString(),
-                        "source" to doc.data["출처"].toString()
-                    ))
-                }
-
-                for (pd in productList) {
-                    //Log.d(TAG,"탄수화물 : ${pd["cargo"]} / 당류 : ${pd["sugar"]} / 나트륨 : ${pd["natrium"]} / 지방 : ${pd["fat"]} / 단백질 : ${pd["protein"]}")
-                    if (pd["productName"] == docName) {
-                        Log.d(TAG, "size : ${productList.size}")
-                        Log.d(TAG,"탄수화물 : ${pd["carbo"]} / 당류 : ${pd["sugar"]} / 나트륨 : ${pd["natrium"]} / 지방 : ${pd["fat"]} / 단백질 : ${pd["protein"]}")
-                        carbo = pd["carbo"]?.toFloat() ?: 0F
-                        sugar = pd["sugar"]?.toFloat() ?: 0F
-                        natrium = pd["natrium"]?.toFloat() ?: 0F
-                        fat = pd["fat"]?.toFloat() ?: 0F
-                        protein = pd["protein"]?.toFloat() ?: 0F
-
-                        date2.text = pd["date"]
-                        ml2.text = pd["ml"]
-                        cal2.text = pd["cal"]
-                        raw2.text = pd["raw"]
-                        caution2.text = pd["caution"]
-                        type2.text = pd["type"]
-                        company2.text = pd["company"]
-                        manufac2.text = pd["manufac"]
-                        contmat2.text = pd["contmat"]
-                        source.text = "출처 : ${pd["source"]}"
-
-                        val entryList = mutableListOf<BarEntry>()
-                        entryList.add(BarEntry(4f, round((carbo/324)*100)))
-                        entryList.add(BarEntry(3f, round((sugar/100)*100)))
-                        entryList.add(BarEntry(2f, round((natrium/2000)*100)))
-                        entryList.add(BarEntry(1f, round((fat/54)*100)))
-                        entryList.add(BarEntry(0f, round((protein/55)*100)))
-
-                        makeGraph(entryList)
-                    }
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents.", exception)
-            }
-    }
-
 
     private fun makeGraph(entryList : List<BarEntry>) {
 
