@@ -59,7 +59,7 @@ class LabelInfoActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView<ActivityLabelInfoBinding>(this, R.layout.activity_label_info)
 
         docName = intent.getStringExtra("Name").toString() // 메인액티비티에서 검색한 것
-        //binding.viewModel = viewModel // 이 화면의 뷰모델은 DrinkViewModel이야~
+        //binding.viewModel = viewModel
 
         binding.lifecycleOwner = this // LiveData를 Databinding으로 쓸 경우 써 줘야 함
         //binding.viewModel.getDrinkInfoMap(docName)

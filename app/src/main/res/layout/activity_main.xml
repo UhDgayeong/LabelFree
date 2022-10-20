@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -12,99 +12,113 @@
             android:id="@+id/include"
             layout="@layout/toolbar" />
 
-        <AutoCompleteTextView
-            android:id="@+id/autoTextView"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="32dp"
-            android:background="@drawable/autotext_design"
-            android:fontFamily="@font/nanumsquarer"
-            android:hint="무라벨 음료를 검색하세요!"
-            android:imeOptions="actionSearch"
-            android:inputType="text"
-            android:maxLines="1"
-            android:paddingEnd="70dp"
-            android:textSize="13sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include" />
-
-        <ImageButton
-            android:id="@+id/searchBtn"
-            android:layout_width="35dp"
-            android:layout_height="48dp"
-
-            android:layout_marginEnd="10dp"
-            android:background="@color/trans"
-            android:backgroundTint="@color/labelfree_icon_background"
-            app:layout_constraintEnd_toEndOf="@+id/autoTextView"
-            app:layout_constraintTop_toTopOf="@+id/autoTextView"
-            app:srcCompat="@drawable/ic_baseline_search_24_blue"
-            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
-        <ImageView
-            android:id="@+id/instaImg"
-            android:layout_width="match_parent"
-            android:layout_height="350dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginEnd="24dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/labery_instagram"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/autoTextView" />
-
-        <ImageButton
-            android:id="@+id/infoBtn"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginEnd="16dp"
-            android:backgroundTint="@android:color/transparent"
-            android:contentDescription="Button"
-            android:scaleType="fitCenter"
-            app:layout_constraintBottom_toTopOf="@+id/adView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_round_info_24" />
-
-        <Button
-            android:id="@+id/instaBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginTop="25dp"
-            android:background="@drawable/btn_style"
-            android:fontFamily="@font/nanumgothicbold"
-            android:text="라벨프리 인스타그램 바로가기 >>"
-            android:textSize="10sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/instaImg" />
-
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/adView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            app:adSize="BANNER"
-            app:adUnitId="@string/banner_id_test"
+        <androidx.drawerlayout.widget.DrawerLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include">
 
-        <ImageButton
-            android:id="@+id/clearBtn"
-            android:layout_width="25dp"
-            android:layout_height="48dp"
-            android:background="@color/trans"
-            android:contentDescription="clearbutton"
-            app:layout_constraintEnd_toStartOf="@+id/searchBtn"
-            app:layout_constraintTop_toTopOf="@+id/autoTextView"
-            app:srcCompat="@drawable/ic_round_clear_24"
-            tools:ignore="TouchTargetSizeCheck" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout>
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="32dp"
+                    android:background="@drawable/autotext_design"
+                    android:fontFamily="@font/nanumsquarer"
+                    android:hint="무라벨 음료를 검색하세요!"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingEnd="70dp"
+                    android:textSize="13sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/searchBtn"
+                    android:layout_width="35dp"
+                    android:layout_height="48dp"
+
+                    android:layout_marginEnd="10dp"
+                    android:background="@color/trans"
+                    android:backgroundTint="@color/labelfree_icon_background"
+                    app:layout_constraintEnd_toEndOf="@+id/autoTextView"
+                    app:layout_constraintTop_toTopOf="@+id/autoTextView"
+                    app:srcCompat="@drawable/ic_baseline_search_24_blue"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+                <ImageView
+                    android:id="@+id/instaImg"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="24dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/labery_instagram"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/autoTextView" />
+
+                <ImageButton
+                    android:id="@+id/infoBtn"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginEnd="16dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:contentDescription="Button"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintBottom_toTopOf="@+id/adView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:srcCompat="@drawable/ic_round_info_24" />
+
+                <Button
+                    android:id="@+id/instaBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/btn_style"
+                    android:fontFamily="@font/nanumgothicbold"
+                    android:text="라벨프리 인스타그램 바로가기 >>"
+                    android:textSize="10sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/instaImg" />
+
+                <com.google.android.gms.ads.AdView
+                    android:id="@+id/adView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    app:adSize="BANNER"
+                    app:adUnitId="@string/banner_id_test"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/clearBtn"
+                    android:layout_width="25dp"
+                    android:layout_height="48dp"
+                    android:background="@color/trans"
+                    android:contentDescription="clearbutton"
+                    app:layout_constraintEnd_toStartOf="@+id/searchBtn"
+                    app:layout_constraintTop_toTopOf="@+id/autoTextView"
+                    app:srcCompat="@drawable/ic_round_clear_24"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.drawerlayout.widget.DrawerLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
