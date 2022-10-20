@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
 import android.widget.*
@@ -145,6 +146,16 @@ class MainActivity : AppCompatActivity() {
         infoBtn.setOnClickListener {
             val intent = Intent(this, AboutAppActivity::class.java)
             startActivity(intent)
+        }
+
+        val drawer_btn = findViewById<ImageView>(R.id.drawer_btn)
+        val drawerLayout = binding.drawerLayout
+        drawer_btn.setOnClickListener {
+            if (!drawerLayout.isDrawerOpen(Gravity.LEFT)) {
+                drawerLayout.openDrawer(Gravity.LEFT)
+            } else {
+                drawerLayout.closeDrawer(Gravity.LEFT)
+            }
         }
 
     }
