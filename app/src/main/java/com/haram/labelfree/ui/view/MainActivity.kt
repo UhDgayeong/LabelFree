@@ -158,6 +158,15 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        binding.navView.setNavigationItemSelectedListener {
+            when(it.itemId) {
+                R.id.mItem1 -> Toast.makeText(applicationContext, "item1", Toast.LENGTH_SHORT).show()
+                R.id.mItem2 -> Toast.makeText(applicationContext, "item2", Toast.LENGTH_SHORT).show()
+                R.id.mItem3 -> Toast.makeText(applicationContext, "item3", Toast.LENGTH_SHORT).show()
+            }
+            true
+        }
+
     }
 
     private fun rand(from: Int, to: Int) : Int {
