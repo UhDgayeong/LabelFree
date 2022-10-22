@@ -2,26 +2,25 @@ package com.haram.labelfree.ui.view
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
 import android.widget.*
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
-import com.haram.labelfree.R
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import com.haram.labelfree.R
 import com.haram.labelfree.databinding.ActivityMainBinding
 import com.haram.labelfree.ui.viewmodel.DrinkViewModel
 import kotlinx.coroutines.runBlocking
 import java.util.*
-import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,8 +28,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var list : ArrayList<String>
     lateinit var autoTextView : AutoCompleteTextView
     lateinit var searchBtn : ImageButton
-    lateinit var instaBtn : Button
-    lateinit var infoBtn : ImageButton
     lateinit var mAdView : AdView
     lateinit var clearBtn : ImageButton
 
@@ -134,38 +131,36 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        instaBtn = findViewById(R.id.instaBtn)
-        instaBtn.setOnClickListener {
-            val uri = Uri.parse("http://instagram.com/labelfree_haram")
-            val likeIng = Intent(Intent.ACTION_VIEW, uri)
-            //likeIng.setPackage("com.instagram.android")
-            startActivity(likeIng)
-        }
-
-        infoBtn = findViewById(R.id.infoBtn)
-        infoBtn.setOnClickListener {
-            val intent = Intent(this, AboutAppActivity::class.java)
-            startActivity(intent)
-        }
-
         val drawer_btn = findViewById<ImageView>(R.id.drawer_btn)
         val drawerLayout = binding.drawerLayout
         drawer_btn.setOnClickListener {
-            if (!drawerLayout.isDrawerOpen(Gravity.LEFT)) {
-                drawerLayout.openDrawer(Gravity.LEFT)
+            if (!drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                drawerLayout.openDrawer(GravityCompat.START)
             } else {
-                drawerLayout.closeDrawer(Gravity.LEFT)
+                drawerLayout.closeDrawer(GravityCompat.START)
             }
         }
 
         binding.navView.setNavigationItemSelectedListener {
             when(it.itemId) {
-                R.id.mItem1 -> Toast.makeText(applicationContext, "item1", Toast.LENGTH_SHORT).show()
-                R.id.mItem2 -> Toast.makeText(applicationContext, "item2", Toast.LENGTH_SHORT).show()
-                R.id.mItem3 -> Toast.makeText(applicationContext, "item3", Toast.LENGTH_SHORT).show()
+                R.id.menu_list -> Toast.makeText(applicationContext, "개발 예정", Toast.LENGTH_SHORT).show()
+
+                R.id.menu_bookmark -> Toast.makeText(applicationContext, "개발 예정", Toast.LENGTH_SHORT).show()
+
+                R.id.menu_info -> {
+                    val intent = Intent(this, AboutAppActivity::class.java)
+                    startActivity(intent)
+                }
+
+                R.id.menu_sns -> {
+                    val uri = Uri.parse("http://instagram.com/labelfree_haram")
+                    val likeIng = Intent(Intent.ACTION_VIEW, uri)
+                    startActivity(likeIng)
+                }
             }
             true
         }
+        binding.navView.itemIconTintList = null
 
     }
 

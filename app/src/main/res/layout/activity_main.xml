@@ -8,10 +8,6 @@
         android:layout_height="match_parent"
         tools:context="com.haram.labelfree.ui.view.MainActivity">
 
-        <include
-            android:id="@+id/include"
-            layout="@layout/toolbar" />
-
         <androidx.drawerlayout.widget.DrawerLayout
             android:id="@+id/drawer_layout"
             android:layout_width="0dp"
@@ -19,12 +15,18 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include">
-
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
+                <include
+                    android:id="@+id/include"
+                    layout="@layout/toolbar"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
                 <AutoCompleteTextView
                     android:id="@+id/autoTextView"
@@ -44,7 +46,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/include" />
 
                 <ImageButton
                     android:id="@+id/searchBtn"
@@ -71,31 +73,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/autoTextView" />
-
-                <ImageButton
-                    android:id="@+id/infoBtn"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginEnd="16dp"
-                    android:backgroundTint="@android:color/transparent"
-                    android:contentDescription="Button"
-                    android:scaleType="fitCenter"
-                    app:layout_constraintBottom_toTopOf="@+id/adView"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:srcCompat="@drawable/ic_round_info_24" />
-
-                <Button
-                    android:id="@+id/instaBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="25dp"
-                    android:background="@drawable/btn_style"
-                    android:fontFamily="@font/nanumgothicbold"
-                    android:text="라벨프리 인스타그램 바로가기 >>"
-                    android:textSize="10sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/instaImg" />
 
                 <com.google.android.gms.ads.AdView
                     android:id="@+id/adView"
@@ -129,7 +106,8 @@
                 app:headerLayout="@layout/nav_header"
                 app:menu="@menu/nav_drawer_menu"
                 android:layout_gravity="start"
-                android:fitsSystemWindows="true" />
+                android:fitsSystemWindows="true"
+                app:itemTextAppearance="@style/TextViewStyle_nanumsquare"/>
 
         </androidx.drawerlayout.widget.DrawerLayout>
 
