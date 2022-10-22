@@ -3,6 +3,8 @@ package com.haram.labelfree.ui.view
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -13,9 +15,11 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import com.google.android.material.navigation.NavigationView
 import com.haram.labelfree.R
 import com.haram.labelfree.databinding.ActivityMainBinding
 import com.haram.labelfree.ui.viewmodel.DrinkViewModel
@@ -30,10 +34,13 @@ class MainActivity : AppCompatActivity() {
     lateinit var searchBtn : ImageButton
     lateinit var mAdView : AdView
     lateinit var clearBtn : ImageButton
+    lateinit var drawerLayout : DrawerLayout
+    lateinit var navView : NavigationView
 
     val viewModel: DrinkViewModel by viewModels()
 
     val TAG = "MainActivity"
+    private var doubleBackToExitPressedOnce = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +52,7 @@ class MainActivity : AppCompatActivity() {
             list = viewModel.getDrinkNameList()
         }
 
-        clearBtn = findViewById(R.id.clearBtn)
+        clearBtn = binding.clearBtn
         clearBtn.visibility = View.INVISIBLE
 
         MobileAds.initialize(this) {}
@@ -54,13 +61,9 @@ class MainActivity : AppCompatActivity() {
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
 
-        //list = SplashActivity.list
-        //list = intent.getStringArrayListExtra("list") as ArrayList<String>
         val listSize = list.size
-        Log.d(TAG, "the size is ... ${listSize}")
 
-
-        autoTextView = findViewById(R.id.autoTextView)
+        autoTextView = binding.autoTextView
         clearBtn.setOnClickListener {
             autoTextView.text = null
         }
@@ -132,7 +135,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val drawer_btn = findViewById<ImageView>(R.id.drawer_btn)
-        val drawerLayout = binding.drawerLayout
+        drawerLayout = binding.drawerLayout
         drawer_btn.setOnClickListener {
             if (!drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.openDrawer(GravityCompat.START)
@@ -141,7 +144,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.navView.setNavigationItemSelectedListener {
+        navView = binding.navView
+        navView.setNavigationItemSelectedListener {
             when(it.itemId) {
                 R.id.menu_list -> Toast.makeText(applicationContext, "개발 예정", Toast.LENGTH_SHORT).show()
 
@@ -160,8 +164,28 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-        binding.navView.itemIconTintList = null
+        navView.itemIconTintList = null
 
+    } // OnCreate
+
+    override fun onBackPressed() {
+        // 메뉴가 열려있을 경우 메뉴를 닫음
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START)
+        }
+
+        // 앱 종료하려면 뒤로가기 두 번 누르기
+        else {
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed()
+                return
+            }
+
+            this.doubleBackToExitPressedOnce = true
+            Toast.makeText(this, "뒤로가기 버튼을 한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
+
+            Handler(Looper.getMainLooper()).postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
+        }
     }
 
     private fun rand(from: Int, to: Int) : Int {
