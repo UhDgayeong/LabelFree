@@ -122,6 +122,12 @@ class LabelInfoActivity : AppCompatActivity() {
         fat = viewModel.productMap["fat"]?.toFloat() ?: 0F
         protein = viewModel.productMap["protein"]?.toFloat() ?: 0F
 
+        Log.d("dbindingTest", "carbo : $carbo")
+        Log.d("dbindingTest", "sugar : $sugar")
+        Log.d("dbindingTest", "natrium : $natrium")
+        Log.d("dbindingTest", "fat : $fat")
+        Log.d("dbindingTest", "protein : $protein")
+
         entryList.add(BarEntry(4f, round((carbo/324)*100)))
         entryList.add(BarEntry(3f, round((sugar/100)*100)))
         entryList.add(BarEntry(2f, round((natrium/2000)*100)))
