@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.haram.labelfree.R
 import com.github.mikephil.charting.charts.HorizontalBarChart
@@ -25,6 +26,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.haram.labelfree.databinding.ActivityLabelInfoBinding
+import com.haram.labelfree.recyclerview.LabelData
+import com.haram.labelfree.recyclerview.LabelRecyclerViewAdapter
 import com.haram.labelfree.ui.viewmodel.DrinkViewModel
 import kotlinx.coroutines.runBlocking
 import java.util.*
@@ -51,6 +54,8 @@ class LabelInfoActivity : AppCompatActivity() {
     lateinit var mAdView : AdView
 
     private lateinit var docName : String
+
+    val mDatas = mutableListOf<LabelData>()
 
     val viewModel: DrinkViewModel by viewModels()
 
@@ -109,7 +114,32 @@ class LabelInfoActivity : AppCompatActivity() {
         }
 
         getGraphData()
+
+        initRecyclerViewList()
+        initLabelRecyclerView()
     } //onCreate
+
+    fun initLabelRecyclerView() {
+        val adapter = LabelRecyclerViewAdapter()
+        adapter.dataList = mDatas // 데이터 넣기
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+    }
+
+    fun initRecyclerViewList() {
+        val pm = viewModel.productMap
+        with(mDatas) {
+            add(LabelData("유통기한", pm["date"].toString()))
+            add(LabelData("총 내용량", pm["ml"].toString()))
+            add(LabelData("총 칼로리", pm["cal"].toString()))
+            add(LabelData("원재료명", pm["raw"].toString()))
+            add(LabelData("주의사항", pm["caution"].toString()))
+            add(LabelData("식품유형", pm["type"].toString()))
+            add(LabelData("제조회사", pm["company"].toString()))
+            add(LabelData("제조원", pm["manufac"].toString()))
+            add(LabelData("용기재질", pm["contmat"].toString()))
+        }
+    }
 
     private fun getGraphData() {
         val entryList = mutableListOf<BarEntry>()
@@ -121,12 +151,6 @@ class LabelInfoActivity : AppCompatActivity() {
         natrium = viewModel.productMap["natrium"]?.toFloat() ?: 0F
         fat = viewModel.productMap["fat"]?.toFloat() ?: 0F
         protein = viewModel.productMap["protein"]?.toFloat() ?: 0F
-
-        Log.d("dbindingTest", "carbo : $carbo")
-        Log.d("dbindingTest", "sugar : $sugar")
-        Log.d("dbindingTest", "natrium : $natrium")
-        Log.d("dbindingTest", "fat : $fat")
-        Log.d("dbindingTest", "protein : $protein")
 
         entryList.add(BarEntry(4f, round((carbo/324)*100)))
         entryList.add(BarEntry(3f, round((sugar/100)*100)))
