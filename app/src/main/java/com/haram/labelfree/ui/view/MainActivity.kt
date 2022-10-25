@@ -52,6 +52,10 @@ class MainActivity : AppCompatActivity() {
             list = viewModel.getDrinkNameList()
         }
 
+        for (l in list) {
+            Log.d("listTest", "$l : ${l[0].code}")
+        }
+
         clearBtn = binding.clearBtn
         clearBtn.visibility = View.INVISIBLE
 
@@ -147,7 +151,10 @@ class MainActivity : AppCompatActivity() {
         navView = binding.navView
         navView.setNavigationItemSelectedListener {
             when(it.itemId) {
-                R.id.menu_list -> Toast.makeText(applicationContext, "개발 예정", Toast.LENGTH_SHORT).show()
+                R.id.menu_list -> {
+                    val intent = Intent(this, ProductListActivity::class.java)
+                    startActivity(intent)
+                }
 
                 R.id.menu_bookmark -> Toast.makeText(applicationContext, "개발 예정", Toast.LENGTH_SHORT).show()
 
