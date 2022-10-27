@@ -1,14 +1,20 @@
 package com.haram.labelfree.recyclerview
 
+import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.haram.labelfree.R
+import com.haram.labelfree.ui.view.LabelInfoActivity
+import java.util.*
 
 class ProductRecyclerViewAdapter: RecyclerView.Adapter<ProductRecyclerViewAdapter.ViewHolder>() {
 
@@ -21,6 +27,11 @@ class ProductRecyclerViewAdapter: RecyclerView.Adapter<ProductRecyclerViewAdapte
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(dataList[position])
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, LabelInfoActivity::class.java)
+            intent.putExtra("Name", holder.productNameTxt.text)
+            startActivity(holder.itemView.context, intent, null)
+        }
     }
 
     override fun getItemCount(): Int = dataList.size
