@@ -43,7 +43,7 @@ class ProductListActivity : AppCompatActivity() {
 
     fun initRecyclerViewList() {
         for (d in drinkNameList) {
-            mDatas.add(ProductData(d, "제조회사"))
+            mDatas.add(ProductData(viewModel.getDrinkImgRef(d), d, "제조회사"))
         }
     }
 }
