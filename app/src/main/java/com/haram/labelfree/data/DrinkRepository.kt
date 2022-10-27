@@ -4,8 +4,6 @@ import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.tasks.await
 
 class DrinkRepository {
@@ -13,6 +11,7 @@ class DrinkRepository {
     val db = Firebase.firestore
 
     private var drinkDocNames = arrayListOf<String>() // 제품명 리스트
+    private var drinkCompanies = arrayListOf<String>()
     private var drinkMap = mapOf<String, String>()
 
     suspend fun getFirebaseData(): Boolean {
@@ -26,6 +25,7 @@ class DrinkRepository {
                 // 전체 데이터 : Log.d("testingDoc", doc.data.toString())
                 Log.d("testingDoc", doc.data?.get("제품명") as String)
                 drinkDocNames.add(doc.data!!.get("제품명") as String)
+                drinkCompanies.add(doc.data!!.get("제조회사") as String)
             }
 
             true
@@ -37,6 +37,10 @@ class DrinkRepository {
 
     fun getDrinkNameList(): ArrayList<String> {
         return drinkDocNames
+    }
+
+    fun getDrinkCompanyList(): ArrayList<String> {
+        return drinkCompanies
     }
 
     suspend fun getDrinkInfo(docName: String): Boolean {

@@ -22,6 +22,7 @@ class ProductListActivity : AppCompatActivity() {
     val viewModel: DrinkViewModel by viewModels()
     val mDatas = mutableListOf<ProductData>()
     var drinkNameList = ArrayList<String>()
+    var drinkCompanyList = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +33,7 @@ class ProductListActivity : AppCompatActivity() {
         }
 
         drinkNameList = viewModel.getDrinkNameList()
+        drinkCompanyList = viewModel.getDrinkCompanyList()
         initRecyclerViewList()
         initProductRecyclerView()
 
@@ -48,7 +50,7 @@ class ProductListActivity : AppCompatActivity() {
 
     fun initRecyclerViewList() {
         for (d in drinkNameList) {
-            mDatas.add(ProductData(viewModel.getDrinkImgRef(d), d, "제조회사"))
+            mDatas.add(ProductData(viewModel.getDrinkImgRef(d), d, drinkCompanyList[drinkNameList.indexOf(d)]))
         }
     }
 }

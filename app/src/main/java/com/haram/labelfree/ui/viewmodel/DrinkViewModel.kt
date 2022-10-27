@@ -1,6 +1,5 @@
 package com.haram.labelfree.ui.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
@@ -19,6 +18,10 @@ class DrinkViewModel : ViewModel() {
 
     fun getDrinkNameList(): ArrayList<String> {
         return repository.getDrinkNameList()
+    }
+
+    fun getDrinkCompanyList(): ArrayList<String> {
+        return repository.getDrinkCompanyList()
     }
 
     // 매개변수로 제품명이 주어지면 해당 제품의 정보들을 불러오는 메소드
