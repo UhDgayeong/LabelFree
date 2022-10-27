@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.haram.labelfree.R
 import com.haram.labelfree.databinding.ActivityProductListBinding
 import com.haram.labelfree.recyclerview.LabelData
 import com.haram.labelfree.recyclerview.ProductData
 import com.haram.labelfree.recyclerview.ProductRecyclerViewAdapter
+import com.haram.labelfree.ui.custom.CustomItemDecoration
 import com.haram.labelfree.ui.viewmodel.DrinkViewModel
 import kotlinx.coroutines.runBlocking
 
@@ -32,13 +34,16 @@ class ProductListActivity : AppCompatActivity() {
         drinkNameList = viewModel.getDrinkNameList()
         initRecyclerViewList()
         initProductRecyclerView()
+
     }
 
     fun initProductRecyclerView() {
         val adapter = ProductRecyclerViewAdapter()
         adapter.dataList = mDatas
+
         binding.plRecyclerView.adapter = adapter
         binding.plRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.plRecyclerView.addItemDecoration(CustomItemDecoration())
     }
 
     fun initRecyclerViewList() {
