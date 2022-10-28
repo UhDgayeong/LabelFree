@@ -12,13 +12,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LabelFree">
         <activity
-            android:name=".ui.view.ProductListActivity"
+            android:name=".ui.view.RegisterActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <!-- play-services-ads 17.0.0 이상은 앱 ID 입력 필요 -->
+        <activity
+            android:name=".ui.view.ProductListActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity> <!-- play-services-ads 17.0.0 이상은 앱 ID 입력 필요 -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/app_ad_id" />
