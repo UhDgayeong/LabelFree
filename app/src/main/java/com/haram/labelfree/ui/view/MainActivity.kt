@@ -183,14 +183,20 @@ class MainActivity : AppCompatActivity() {
         }
         navView.itemIconTintList = null
 
-        Log.d("emailtest", intent.getStringExtra("email")!!)
+        //Log.d("emailtest", intent.getStringExtra("email")!!)
 
         binding.logoutLayout.setOnClickListener {
             signOut()
         }
+
+        setEmailTxt()
     } // OnCreate
 
-
+    private fun setEmailTxt() {
+        val headerView = binding.navView.getHeaderView(0)
+        val emailTxt = headerView.findViewById<TextView>(R.id.account_email_txt)
+        emailTxt.text = intent.getStringExtra("email").toString()
+    }
 
     private fun signOut() {
         auth.signOut()
