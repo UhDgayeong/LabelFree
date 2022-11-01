@@ -20,6 +20,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.haram.labelfree.R
 import com.haram.labelfree.databinding.ActivityMainBinding
 import com.haram.labelfree.ui.viewmodel.DrinkViewModel
@@ -36,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var clearBtn : ImageButton
     lateinit var drawerLayout : DrawerLayout
     lateinit var navView : NavigationView
+    lateinit var auth : FirebaseAuth
 
     val viewModel: DrinkViewModel by viewModels()
 
@@ -51,6 +53,8 @@ class MainActivity : AppCompatActivity() {
             viewModel.reload()
             list = viewModel.getDrinkNameList()
         }
+
+        auth = FirebaseAuth.getInstance()
 
         for (l in list) {
             Log.d("listTest", "$l : ${l[0].code}")
@@ -174,7 +178,17 @@ class MainActivity : AppCompatActivity() {
         navView.itemIconTintList = null
 
         Log.d("emailtest", intent.getStringExtra("email")!!)
+
+        binding.logoutLayout.setOnClickListener {
+            signOut()
+        }
     } // OnCreate
+
+    private fun signOut() {
+        auth.signOut()
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+    }
 
     override fun onBackPressed() {
         // 메뉴가 열려있을 경우 메뉴를 닫음
