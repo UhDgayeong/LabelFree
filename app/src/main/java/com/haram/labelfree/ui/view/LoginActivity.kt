@@ -7,18 +7,36 @@ import android.text.InputFilter
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
+import com.google.android.gms.auth.api.identity.BeginSignInRequest
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.haram.labelfree.R
 import com.haram.labelfree.databinding.ActivityLoginBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
     lateinit var auth: FirebaseAuth
+    lateinit var signInRequest: BeginSignInRequest
+
+    private val TAG = "LoginActivityTest"
+    private lateinit var launcher: ActivityResultLauncher<Intent>
+    private var email: String = ""
+    private var tokenId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +64,67 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText( this, "영문, 숫자, 특수기호 !@#\$%^+\\-=만 입력 가능합니다.", Toast.LENGTH_SHORT).show()
             ""
         }, InputFilter.LengthFilter(20))
+
+//        binding.googleSignInBtn.setOnClickListener {
+//            signInRequest = BeginSignInRequest.builder()
+//                .setGoogleIdTokenRequestOptions(
+//                    BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+//                        .setSupported(true)
+//                        // Your server's client ID, not your Android client ID.
+//                        .setServerClientId(getString(R.string.web_client_id))
+//                        // Only show accounts previously used to sign in.
+//                        .setFilterByAuthorizedAccounts(true)
+//                        .build())
+//                .build()
+//        }
+
+        launcher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult(), ActivityResultCallback { result ->
+                Log.e(TAG, "resultCode : ${result.resultCode}")
+                Log.e(TAG, "result : $result")
+                if (result.resultCode == RESULT_OK) {
+                    val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                    try {
+                        task.getResult(ApiException::class.java)?.let { account ->
+                            tokenId = account.idToken
+                            if (tokenId != null && tokenId != "") {
+                                val credential: AuthCredential = GoogleAuthProvider.getCredential(account.idToken, null)
+                                auth.signInWithCredential(credential)
+                                    .addOnCompleteListener {
+                                        if (auth.currentUser != null) {
+                                            val user: FirebaseUser = auth.currentUser!!
+                                            email = user.email.toString()
+                                            Log.e(TAG, "email : $email")
+                                            val googleSignInToken = account.idToken ?: ""
+                                            if (googleSignInToken != "") {
+                                                Log.e(TAG, "googleSignInToken : $googleSignInToken")
+                                            } else {
+                                                Log.e(TAG, "googleSignInToken이 null")
+                                            }
+                                        }
+                                    }
+                            }
+                        } ?: throw  Exception()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            })
+
+        binding.run {
+            googleSignInBtn.setOnClickListener {
+                CoroutineScope(Dispatchers.IO).launch {
+                    val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestIdToken(getString(R.string.default_web_client_id))
+                        .requestEmail()
+                        .build()
+                    val googleSignInClient = GoogleSignIn.getClient(this@LoginActivity, gso)
+                    val signInIntent: Intent = googleSignInClient.signInIntent
+                    launcher.launch(signInIntent)
+                }
+                startMainActivity()
+            }
+        }
     }
 
     fun signIn(view: View) {
@@ -61,6 +140,13 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(this, "이메일 또는 비밀번호를 잘못 입력했습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
+    }
+
+    private fun startMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        Log.d("emailtest", "send email : ${email}")
+        intent.putExtra("email", email)
+        startActivity(intent)
     }
 
     private fun goMainActivity(user: FirebaseUser) {

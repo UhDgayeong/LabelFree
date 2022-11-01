@@ -173,6 +173,7 @@ class MainActivity : AppCompatActivity() {
         }
         navView.itemIconTintList = null
 
+        Log.d("emailtest", intent.getStringExtra("email")!!)
     } // OnCreate
 
     override fun onBackPressed() {
