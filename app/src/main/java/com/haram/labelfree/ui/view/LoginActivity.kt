@@ -13,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.AuthCredential
@@ -30,13 +31,15 @@ import java.util.regex.Pattern
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
-    lateinit var auth: FirebaseAuth
-    lateinit var signInRequest: BeginSignInRequest
+    private lateinit var auth: FirebaseAuth
+    private lateinit var googleSignInClient: GoogleSignInClient
 
     private val TAG = "LoginActivityTest"
     private lateinit var launcher: ActivityResultLauncher<Intent>
     private var email: String = ""
     private var tokenId: String? = null
+
+    private val GOOGLE_SIGN_IN = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,53 +81,104 @@ class LoginActivity : AppCompatActivity() {
 //                .build()
 //        }
 
-        launcher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult(), ActivityResultCallback { result ->
-                Log.e(TAG, "resultCode : ${result.resultCode}")
-                Log.e(TAG, "result : $result")
-                if (result.resultCode == RESULT_OK) {
-                    val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-                    try {
-                        task.getResult(ApiException::class.java)?.let { account ->
-                            tokenId = account.idToken
-                            if (tokenId != null && tokenId != "") {
-                                val credential: AuthCredential = GoogleAuthProvider.getCredential(account.idToken, null)
-                                auth.signInWithCredential(credential)
-                                    .addOnCompleteListener {
-                                        if (auth.currentUser != null) {
-                                            val user: FirebaseUser = auth.currentUser!!
-                                            email = user.email.toString()
-                                            Log.e(TAG, "email : $email")
-                                            val googleSignInToken = account.idToken ?: ""
-                                            if (googleSignInToken != "") {
-                                                Log.e(TAG, "googleSignInToken : $googleSignInToken")
-                                            } else {
-                                                Log.e(TAG, "googleSignInToken이 null")
-                                            }
-                                        }
-                                    }
-                            }
-                        } ?: throw  Exception()
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
-            })
+//        launcher = registerForActivityResult(
+//            ActivityResultContracts.StartActivityForResult(), ActivityResultCallback { result ->
+//                Log.e(TAG, "resultCode : ${result.resultCode}")
+//                Log.e(TAG, "result : $result")
+//                if (result.resultCode == RESULT_OK) {
+//                    val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+//                    try {
+//                        task.getResult(ApiException::class.java)?.let { account ->
+//                            tokenId = account.idToken
+//                            if (tokenId != null && tokenId != "") {
+//                                val credential: AuthCredential = GoogleAuthProvider.getCredential(account.idToken, null)
+//                                auth.signInWithCredential(credential)
+//                                    .addOnCompleteListener {
+//                                        if (auth.currentUser != null) {
+//                                            val user: FirebaseUser = auth.currentUser!!
+//                                            email = user.email.toString()
+//                                            Log.e(TAG, "email : $email")
+//                                            val googleSignInToken = account.idToken ?: ""
+//                                            if (googleSignInToken != "") {
+//                                                Log.e(TAG, "googleSignInToken : $googleSignInToken")
+//                                            } else {
+//                                                Log.e(TAG, "googleSignInToken이 null")
+//                                            }
+//                                        }
+//                                    }
+//                            }
+//                        } ?: throw  Exception()
+//                    } catch (e: Exception) {
+//                        e.printStackTrace()
+//                    }
+//                }
+//            })
 
-        binding.run {
-            googleSignInBtn.setOnClickListener {
-                CoroutineScope(Dispatchers.IO).launch {
-                    val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        .requestIdToken(getString(R.string.default_web_client_id))
-                        .requestEmail()
-                        .build()
-                    val googleSignInClient = GoogleSignIn.getClient(this@LoginActivity, gso)
-                    val signInIntent: Intent = googleSignInClient.signInIntent
-                    launcher.launch(signInIntent)
-                }
-                startMainActivity()
+        // 클라이언트에 넣을 구글 로그인 옵션 설정
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        // 클라이언트 생성
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+
+        binding.googleSignInBtn.setOnClickListener {
+
+            startActivityForResult(googleSignInClient.signInIntent, GOOGLE_SIGN_IN)
+        }
+
+//        binding.run {
+//            googleSignInBtn.setOnClickListener {
+//                CoroutineScope(Dispatchers.IO).launch {
+//                    val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                        .requestIdToken(getString(R.string.default_web_client_id))
+//                        .requestEmail()
+//                        .build()
+//                    val googleSignInClient = GoogleSignIn.getClient(this@LoginActivity, gso)
+//                    val signInIntent: Intent = googleSignInClient.signInIntent
+//                    launcher.launch(signInIntent)
+//                }
+//                startMainActivity()
+//            }
+//        }
+    } // onCreate
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == GOOGLE_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                // 로그인 성공 확인
+                val account = task.getResult(ApiException::class.java)
+                Log.d(TAG, "Google Sign in : " + account.email)
+                email = account.email.toString()
+                firebaseAuthWithGoogle(account.idToken!!)
+            } catch(e: ApiException) {
+                // 연결 실패
+                Log.w(TAG, "Google sign in failed : ", e)
+                Toast.makeText(this, "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun firebaseAuthWithGoogle(idToken: String) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // 스플레시 액티비티로 구성하여 성공한다면 finish() 동작 수행
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "signInWithCredential:success")
+                    Toast.makeText(this, "로그인 되었습니다.", Toast.LENGTH_SHORT).show()
+                    startMainActivity()
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInWithCredential:failure", task.exception)
+                    Toast.makeText(this, "로그인 연결 실패", Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 
     fun signIn(view: View) {

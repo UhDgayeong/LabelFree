@@ -19,8 +19,12 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.common.api.ApiException
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.haram.labelfree.R
 import com.haram.labelfree.databinding.ActivityMainBinding
 import com.haram.labelfree.ui.viewmodel.DrinkViewModel
@@ -38,6 +42,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var drawerLayout : DrawerLayout
     lateinit var navView : NavigationView
     lateinit var auth : FirebaseAuth
+
+    private val GOOGLE_SIGN_IN = 1
 
     val viewModel: DrinkViewModel by viewModels()
 
@@ -183,6 +189,8 @@ class MainActivity : AppCompatActivity() {
             signOut()
         }
     } // OnCreate
+
+
 
     private fun signOut() {
         auth.signOut()
