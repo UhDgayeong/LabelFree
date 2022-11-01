@@ -107,7 +107,46 @@
                 app:menu="@menu/nav_drawer_menu"
                 android:layout_gravity="start"
                 android:fitsSystemWindows="true"
-                app:itemTextAppearance="@style/TextViewStyle_nanumsquare"/>
+                app:itemTextAppearance="@style/TextViewStyle_nanumsquare">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#AEAEAE"/>
+
+                    <LinearLayout
+                        android:id="@+id/logout_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="16dp"
+                            android:src="@drawable/ic_round_logout_24"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:fontFamily="@font/nanumsquarer"
+                            android:textColor="#646464"
+                            android:layout_marginStart="6dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:text="로그아웃" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </com.google.android.material.navigation.NavigationView>
 
         </androidx.drawerlayout.widget.DrawerLayout>
 
