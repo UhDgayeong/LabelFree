@@ -27,7 +27,7 @@
         <View
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="2" />
+            android:layout_weight="1" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="70dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/btn_style_white"
             android:fontFamily="@font/nanumgothicbold"
             android:onClick="@{activity::signIn}"
@@ -89,9 +89,19 @@
         <com.google.android.gms.common.SignInButton
             android:id="@+id/googleSignInBtn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp" />
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/facebookSignInBtn"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="19dp"
+            android:layout_marginEnd="19dp" />
 
     </LinearLayout>
 </layout>

@@ -11,15 +11,18 @@ import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
+import com.facebook.AccessToken
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.AuthCredential
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.haram.labelfree.R
@@ -40,6 +43,8 @@ class LoginActivity : AppCompatActivity() {
     private var tokenId: String? = null
 
     private val GOOGLE_SIGN_IN = 1
+
+    private var callbackManager: CallbackManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,80 +73,24 @@ class LoginActivity : AppCompatActivity() {
             ""
         }, InputFilter.LengthFilter(20))
 
-//        binding.googleSignInBtn.setOnClickListener {
-//            signInRequest = BeginSignInRequest.builder()
-//                .setGoogleIdTokenRequestOptions(
-//                    BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
-//                        .setSupported(true)
-//                        // Your server's client ID, not your Android client ID.
-//                        .setServerClientId(getString(R.string.web_client_id))
-//                        // Only show accounts previously used to sign in.
-//                        .setFilterByAuthorizedAccounts(true)
-//                        .build())
-//                .build()
-//        }
-
-//        launcher = registerForActivityResult(
-//            ActivityResultContracts.StartActivityForResult(), ActivityResultCallback { result ->
-//                Log.e(TAG, "resultCode : ${result.resultCode}")
-//                Log.e(TAG, "result : $result")
-//                if (result.resultCode == RESULT_OK) {
-//                    val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-//                    try {
-//                        task.getResult(ApiException::class.java)?.let { account ->
-//                            tokenId = account.idToken
-//                            if (tokenId != null && tokenId != "") {
-//                                val credential: AuthCredential = GoogleAuthProvider.getCredential(account.idToken, null)
-//                                auth.signInWithCredential(credential)
-//                                    .addOnCompleteListener {
-//                                        if (auth.currentUser != null) {
-//                                            val user: FirebaseUser = auth.currentUser!!
-//                                            email = user.email.toString()
-//                                            Log.e(TAG, "email : $email")
-//                                            val googleSignInToken = account.idToken ?: ""
-//                                            if (googleSignInToken != "") {
-//                                                Log.e(TAG, "googleSignInToken : $googleSignInToken")
-//                                            } else {
-//                                                Log.e(TAG, "googleSignInToken이 null")
-//                                            }
-//                                        }
-//                                    }
-//                            }
-//                        } ?: throw  Exception()
-//                    } catch (e: Exception) {
-//                        e.printStackTrace()
-//                    }
-//                }
-//            })
-
         // 클라이언트에 넣을 구글 로그인 옵션 설정
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
 
-        // 클라이언트 생성
+        // 구글 클라이언트 생성
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         binding.googleSignInBtn.setOnClickListener {
-
             startActivityForResult(googleSignInClient.signInIntent, GOOGLE_SIGN_IN)
         }
 
-//        binding.run {
-//            googleSignInBtn.setOnClickListener {
-//                CoroutineScope(Dispatchers.IO).launch {
-//                    val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                        .requestIdToken(getString(R.string.default_web_client_id))
-//                        .requestEmail()
-//                        .build()
-//                    val googleSignInClient = GoogleSignIn.getClient(this@LoginActivity, gso)
-//                    val signInIntent: Intent = googleSignInClient.signInIntent
-//                    launcher.launch(signInIntent)
-//                }
-//                startMainActivity()
-//            }
-//        }
+        // 페이스북
+        callbackManager = CallbackManager.Factory.create()
+        binding.facebookSignInBtn.setOnClickListener {
+            facebookLogin()
+        }
     } // onCreate
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -161,6 +110,54 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
             }
         }
+        else {
+            callbackManager?.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    private fun facebookLogin() {
+
+        LoginManager.getInstance()
+            .logInWithReadPermissions(this, listOf("email", "public_profile"))
+
+        LoginManager.getInstance()
+            .registerCallback(callbackManager, object: FacebookCallback<LoginResult> {
+                override fun onSuccess(result: LoginResult) {
+                    // facebook 계정 정보를 firebase 서버에게 전달(로그인)
+                    Log.d(TAG, "facebook:onSuccess:$result")
+                    val accessToken = result.accessToken
+                    email = accessToken.userId
+                    firebaseAuthWithFacebook(result?.accessToken)
+                }
+
+                override fun onCancel() {
+                    //취소가 된 경우 할일
+                    Log.d(TAG, "facebook:onCancel")
+                }
+
+                override fun onError(error: FacebookException) {
+                    //에러가 난 경우 할일
+                    Log.d(TAG, "facebook:onError", error)
+                }
+            })
+    }
+
+    private fun firebaseAuthWithFacebook(accessToken: AccessToken?) {
+        // AccessToken 으로 Facebook 인증
+        val credential = FacebookAuthProvider.getCredential(accessToken?.token!!)
+
+        // 성공 시 Firebase 에 유저 정보 보내기 (로그인)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener{ task ->
+                if(task.isSuccessful){ // 정상적으로 email, password 가 전달된 경우
+                    // 로그인 처리
+                    //goMainActivity(task.result?.user!!)
+                    startMainActivity()
+                } else {
+                    // 예외 발생 시 메시지 출력
+                    Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()
+                }
+            }
     }
 
     private fun firebaseAuthWithGoogle(idToken: String) {

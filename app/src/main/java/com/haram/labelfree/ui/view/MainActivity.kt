@@ -43,8 +43,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var navView : NavigationView
     lateinit var auth : FirebaseAuth
 
-    private val GOOGLE_SIGN_IN = 1
-
     val viewModel: DrinkViewModel by viewModels()
 
     val TAG = "MainActivity"

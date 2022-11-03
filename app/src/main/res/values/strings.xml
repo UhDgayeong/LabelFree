@@ -4,4 +4,7 @@
     <string name="banner_id">ca-app-pub-2575420979476430/9901222398</string>
     <string name="banner_id_test">ca-app-pub-3940256099942544/6300978111</string>
     <string name="web_client_id">587802478532-h2tgne17m8bv1qain8tji9pv5s635m9q.apps.googleusercontent.com</string>
+    <string name="facebook_app_id">684304989982491</string>
+    <string name="fb_login_protocol_scheme">fb684304989982491</string>
+    <string name="facebook_client_token">27190ff8c96558b0aa913c5312379bb4</string>
 </resources>
