@@ -50,6 +50,14 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <ImageView
+                    android:id="@+id/bookmark_btn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_round_star_border_24"
+                    app:layout_constraintBottom_toBottomOf="@+id/image"
+                    app:layout_constraintEnd_toEndOf="@+id/nameTxt" />
+
                 <TextView
                     android:id="@+id/nameTxt"
                     android:text="@{viewModel.productMap[`productName`]}"
