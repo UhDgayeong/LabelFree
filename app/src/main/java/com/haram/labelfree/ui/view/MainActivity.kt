@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
 
         MobileAds.initialize(this) {}
 
-        mAdView = findViewById(R.id.adView)
+        mAdView = binding.adView
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
 
@@ -166,8 +166,6 @@ class MainActivity : AppCompatActivity() {
                     val intent = Intent(this, ProductListActivity::class.java)
                     startActivity(intent)
                 }
-
-                R.id.menu_bookmark -> Toast.makeText(applicationContext, "개발 예정", Toast.LENGTH_SHORT).show()
 
                 R.id.menu_info -> {
                     val intent = Intent(this, AboutAppActivity::class.java)

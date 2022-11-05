@@ -7,11 +7,6 @@
         android:icon="@drawable/ic_round_format_list_bulleted_24_blue"/>
 
     <item
-        android:id="@+id/menu_bookmark"
-        android:title="즐겨찾기"
-        android:icon="@drawable/ic_round_star_outline_24_blue"/>
-
-    <item
         android:id="@+id/menu_info"
         android:title="앱 소개"
         android:icon="@drawable/ic_outline_info_24_blue"/>
