@@ -30,11 +30,13 @@
             android:layout_weight="1" />
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:textColorHint="@color/white">
+            android:textColorHint="@color/white"
+            android:theme="@style/EditTextStyle">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_email"
@@ -50,13 +52,16 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="20dp"
             android:textColorHint="@color/white"
-            app:passwordToggleEnabled="true">
+            android:theme="@style/EditTextStyle"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/white">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_pw"
@@ -71,13 +76,16 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:textColorHint="@color/white"
-            app:passwordToggleEnabled="true">
+            android:theme="@style/EditTextStyle"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/white">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_pw_check"

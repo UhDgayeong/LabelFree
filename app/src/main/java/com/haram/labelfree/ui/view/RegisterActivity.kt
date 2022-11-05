@@ -58,7 +58,7 @@ class RegisterActivity : AppCompatActivity() {
 
     fun signUp(view: View) {
         if(binding.editPw.text.toString() != binding.editPwCheck.text.toString()) {
-            Toast.makeText(this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "입력한 비밀번호가 서로 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
         }
 
         else {
@@ -70,6 +70,7 @@ class RegisterActivity : AppCompatActivity() {
                         //새 유저 계정을 생성과 서버db 저장 완료 및 로그인
                         //즉, 기존에 있는 계정이 아니다!
                         goMainActivity(task.result.user!!)
+                        finish()
                     }
                     else if (task.exception?.message.isNullOrEmpty()==false){
                         //예외메세지가 있다면 출력
