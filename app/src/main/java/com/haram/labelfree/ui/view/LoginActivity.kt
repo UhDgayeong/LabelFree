@@ -39,7 +39,6 @@ class LoginActivity : AppCompatActivity() {
 
     private val TAG = "LoginActivityTest"
     private lateinit var launcher: ActivityResultLauncher<Intent>
-    private var email: String = ""
     private var tokenId: String? = null
 
     private val GOOGLE_SIGN_IN = 1
@@ -102,7 +101,6 @@ class LoginActivity : AppCompatActivity() {
                 // 로그인 성공 확인
                 val account = task.getResult(ApiException::class.java)
                 Log.d(TAG, "Google Sign in : " + account.email)
-                email = account.email.toString()
                 firebaseAuthWithGoogle(account.idToken!!)
             } catch(e: ApiException) {
                 // 연결 실패
@@ -126,7 +124,6 @@ class LoginActivity : AppCompatActivity() {
                     // facebook 계정 정보를 firebase 서버에게 전달(로그인)
                     Log.d(TAG, "facebook:onSuccess:$result")
                     val accessToken = result.accessToken
-                    email = accessToken.userId
                     firebaseAuthWithFacebook(result?.accessToken)
                 }
 
@@ -195,8 +192,6 @@ class LoginActivity : AppCompatActivity() {
 
     private fun startMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
-        Log.d("emailtest", "send email : ${email}")
-        intent.putExtra("email", email)
         startActivity(intent)
     }
 

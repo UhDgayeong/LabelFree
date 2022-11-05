@@ -24,6 +24,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.haram.labelfree.R
 import com.haram.labelfree.databinding.ActivityMainBinding
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var drawerLayout : DrawerLayout
     lateinit var navView : NavigationView
     lateinit var auth : FirebaseAuth
+    lateinit var user: FirebaseUser
 
     val viewModel: DrinkViewModel by viewModels()
 
@@ -59,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         auth = FirebaseAuth.getInstance()
+        user = auth.currentUser!!
 
         for (l in list) {
             Log.d("listTest", "$l : ${l[0].code}")
@@ -193,7 +196,7 @@ class MainActivity : AppCompatActivity() {
     private fun setEmailTxt() {
         val headerView = binding.navView.getHeaderView(0)
         val emailTxt = headerView.findViewById<TextView>(R.id.account_email_txt)
-        emailTxt.text = intent.getStringExtra("email").toString()
+        emailTxt.text = user.email
     }
 
     private fun signOut() {
