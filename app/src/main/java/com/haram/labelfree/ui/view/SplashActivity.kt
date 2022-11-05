@@ -6,11 +6,14 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.WindowManager
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.haram.labelfree.R
 
 class SplashActivity : AppCompatActivity() {
+
+    lateinit var auth : FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,13 +21,27 @@ class SplashActivity : AppCompatActivity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_splash)
 
-        Handler().postDelayed({
-            //val intent = Intent(this, MainActivity::class.java)
-            val intent = Intent(this, IntroActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-            startActivity(intent)
-            finish()
-        }, 1000)
+        auth = FirebaseAuth.getInstance()
+
+        if (auth.currentUser != null) {
+            Handler().postDelayed({
+                //val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                startActivity(intent)
+                finish()
+            }, 1000)
+        }
+
+        else {
+            Handler().postDelayed({
+                //val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, IntroActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                startActivity(intent)
+                finish()
+            }, 1000)
+        }
     }
 
     override fun onBackPressed() {

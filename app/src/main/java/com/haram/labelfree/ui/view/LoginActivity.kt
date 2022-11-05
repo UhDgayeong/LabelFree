@@ -193,11 +193,13 @@ class LoginActivity : AppCompatActivity() {
     private fun startMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     private fun goMainActivity(user: FirebaseUser) {
         Log.d("userTest", user.toString())
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+        finish()
     }
 }

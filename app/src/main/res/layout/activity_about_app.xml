@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:background="@color/white"
+    android:orientation="vertical">
+
     <include
         android:id="@+id/include2"
         layout="@layout/toolbar2" />
@@ -21,124 +21,136 @@
         app:adSize="BANNER"
         app:adUnitId="@string/banner_id_test" />
 
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            tools:context="com.haram.labelfree.ui.view.AboutAppActivity">
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context="com.haram.labelfree.ui.view.AboutAppActivity">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/textview_style_skyblue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="80dp"
+                android:layout_height="120dp"
+                android:layout_marginStart="10dp"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+                app:layout_constraintStart_toStartOf="@+id/constraintLayout"
+                app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+                app:srcCompat="@drawable/labery"
+                tools:layout_editor_absoluteX="24dp" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/nanumgothicbold"
+                android:text="라베리를 소개할게요!"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="0dp"
+                android:layout_height="170dp"
+                android:fontFamily="@font/nanumsquarer"
+                android:gravity="center_vertical"
+                android:lineSpacingExtra="7dp"
+                android:padding="15dp"
+                android:text="여러분 저는 '라베리'라고 해요!😊\n친환경과 자연을 상징하는 새싹🌱이 머리 위에 있고, 저의 이름처럼 베리베리하게 연보라색이 저의 색이에요!\n앞으로 여러분들께 다양한 제 모습을 보여주고 싶어요~😊 기대해주세요!"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+                app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="44dp"
+                android:fontFamily="@font/nanumgothicbold"
+                android:text="라벨프리를 소개할게요!"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/textview_style_skyblue"
+                android:fontFamily="@font/nanumsquarer"
+                android:lineSpacingExtra="7dp"
+                android:padding="15dp"
+                android:text="라벨프리는 무라벨 음료의 정보를 제공하는 앱이에요.\n무라벨 음료는 환경 보호에 큰 이바지를 하고 있지만 라벨이 없어 영양성분 및 여러 정보들을 제공할 수 없다는 문제점이 있어요.😔 저희 라벨프리는 이러한 점에서 도움이 되고 싶어서 이 앱을 개발하게 되었어요!"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="44dp"
+                android:fontFamily="@font/nanumgothicbold"
+                android:text="라벨프리에 대해 더 알고 싶나요?"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="@+id/textView5"
+                app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="50dp"
+                android:background="@drawable/textview_style_skyblue"
+                android:fontFamily="@font/nanumsquarer"
+                android:lineSpacingExtra="7dp"
+                android:padding="15dp"
+                android:text="무라벨 음료에 대한 설명이나 라벨프리 앱에 대한 더 자세한 설명을 보고 싶다면 인스타그램에 '라벨프리' 또는 'labelfree_haram'을 검색해보세요!\n앞으로 다양한 무라벨 음료에 대해 소개해드릴 테니 많은 관심 부탁드려요.🥰\n\n혹시 궁금한 사항이 있다면 다이렉트 메세지(DM)를 보내주세요~\n라벨프리와 라베리 많이 사랑해주세요! 감사합니다.🙇‍♀"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textView6"
+                app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="67dp"
-        android:layout_height="92dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="20dp"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="@+id/textView3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:srcCompat="@drawable/labery" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/nanumgothicbold"
-        android:text="라베리를 소개할게요!"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="24dp"
-        android:fontFamily="@font/nanumsquarer"
-        android:lineSpacingExtra="7dp"
-        android:text="여러분 저는 '라베리'라고 해요!😊\n친환경과 자연을 상징하는 새싹🌱이 머리 위에 있고, 저의 이름처럼 베리베리하게 연보라색이 저의 색이에요!\n앞으로 여러분들께 다양한 제 모습을 보여주고 싶어요~😊 기대해주세요!"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="44dp"
-        android:fontFamily="@font/nanumgothicbold"
-        android:text="라벨프리를 소개할게요!"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="24dp"
-        android:fontFamily="@font/nanumsquarer"
-        android:lineSpacingExtra="7dp"
-        android:text="라벨프리는 무라벨 음료의 정보를 제공하는 앱이에요.\n무라벨 음료는 환경 보호에 큰 이바지를 하고 있지만 라벨이 없어 영양성분 및 여러 정보들을 제공할 수 없다는 문제점이 있어요.😔 저희 라벨프리는 이러한 점에서 도움이 되고 싶어서 이 앱을 개발하게 되었어요!"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="30dp"
-        android:fontFamily="@font/nanumgothicbold"
-        android:text="라벨프리에 대해 더 알고 싶나요?"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="50dp"
-        android:fontFamily="@font/nanumsquarer"
-        android:lineSpacingExtra="7dp"
-        android:text="무라벨 음료에 대한 설명이나 라벨프리 앱에 대한 더 자세한 설명을 보고 싶다면 인스타그램에 '라벨프리' 또는 'labelfree_haram'을 검색해보세요!\n앞으로 다양한 무라벨 음료에 대해 소개해드릴 테니 많은 관심 부탁드려요.🥰\n\n혹시 궁금한 사항이 있다면 다이렉트 메세지(DM)를 보내주세요~\n라벨프리와 라베리 많이 사랑해주세요! 감사합니다.🙇‍♀"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textView6"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>
+    </ScrollView>
 
 </LinearLayout>
