@@ -7,6 +7,8 @@ import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.haram.labelfree.R
 import com.haram.labelfree.databinding.ActivityProductListBinding
 import com.haram.labelfree.recyclerview.LabelData
@@ -24,6 +26,8 @@ class ProductListActivity : AppCompatActivity() {
     var drinkNameList = ArrayList<String>()
     var drinkCompanyList = ArrayList<String>()
 
+    lateinit var mAdView : AdView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_list)
@@ -36,6 +40,10 @@ class ProductListActivity : AppCompatActivity() {
         drinkCompanyList = viewModel.getDrinkCompanyList()
         initRecyclerViewList()
         initProductRecyclerView()
+
+        mAdView = binding.adView
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
     }
 
