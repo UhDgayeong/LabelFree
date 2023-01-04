@@ -150,6 +150,7 @@ class LoginActivity : AppCompatActivity() {
                     // 로그인 처리
                     //goMainActivity(task.result?.user!!)
                     startMainActivity()
+                    finish()
                 } else {
                     // 예외 발생 시 메시지 출력
                     Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()

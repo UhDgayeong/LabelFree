@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
+import com.facebook.login.LoginManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
@@ -199,6 +200,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun signOut() {
         auth.signOut()
+        LoginManager.getInstance().logOut() //facebook logout
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finish()

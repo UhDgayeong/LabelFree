@@ -24,10 +24,12 @@ class IntroActivity : AppCompatActivity() {
     fun goLoginActivity(view: View) {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     fun goRegisterActivity(view: View) {
         val intent = Intent(this, RegisterActivity::class.java)
         startActivity(intent)
+        finish()
     }
 }
