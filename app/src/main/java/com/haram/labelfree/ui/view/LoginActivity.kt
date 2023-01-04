@@ -85,9 +85,12 @@ class LoginActivity : AppCompatActivity() {
             startActivityForResult(googleSignInClient.signInIntent, GOOGLE_SIGN_IN)
         }
 
-        // 페이스북
+        // 페이스북 로그인
         callbackManager = CallbackManager.Factory.create()
-        binding.facebookSignInBtn.setOnClickListener {
+        val facebookSignInBtn = binding.facebookSignInBtn
+        facebookSignInBtn.setOnClickListener {
+            facebookSignInBtn.setReadPermissions("email", "public_profile") // 페이스북 퍼미션 읽기(에러 방지)
+            //facebookSignInBtn.setReadPermissions("email", "public_profile", "user_friends")
             facebookLogin()
         }
     } // onCreate
