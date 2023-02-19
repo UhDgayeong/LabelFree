@@ -33,6 +33,7 @@ import com.haram.labelfree.ui.viewmodel.DrinkViewModel
 import kotlinx.coroutines.runBlocking
 import java.util.*
 
+// 메인 홈 화면
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -64,10 +65,6 @@ class MainActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         user = auth.currentUser!!
 
-        for (l in list) {
-            Log.d("listTest", "$l : ${l[0].code}")
-        }
-
         clearBtn = binding.clearBtn
         clearBtn.visibility = View.INVISIBLE
 
@@ -84,6 +81,8 @@ class MainActivity : AppCompatActivity() {
             autoTextView.text = null
         }
 
+        // 검색창에 아무것도 치지 않았을 때는 모두 지우는 버튼(X버튼)이 안 보이게 하고,
+        // 검색창이 비어있지 않은 경우에는 X버튼이 보이게 설정
         autoTextView.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 clearBtn.visibility = View.VISIBLE
@@ -101,13 +100,16 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        // 검색창의 힌트 설정
         val str = "'${list[rand(0, listSize)]}'를(을) 검색해 보세요!"
-
         autoTextView.hint = str
+
+        // 검색어 추천 기능 설정
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, list)
         autoTextView.setAdapter(adapter)
         autoTextView.threshold = 1
 
+        // 추천 검색어 클릭 시 해당 음료 페이지로 넘어가도록 설정
         autoTextView.onItemClickListener = AdapterView.OnItemClickListener{ parent,view,position,id->
             val selectedItem = parent.getItemAtPosition(position).toString()
             val intent = Intent(this, LabelInfoActivity::class.java)
@@ -116,16 +118,14 @@ class MainActivity : AppCompatActivity() {
         }
         autoTextView.setOnKeyListener { _, keyCode, event ->
             when {
-                //Check if it is the Enter-Key,      Check if the Enter Key was pressed down
+                // 검색어 입력 후 엔터 키를 눌렀을 때
                 ((keyCode == KeyEvent.KEYCODE_ENTER) && (event.action == KeyEvent.ACTION_DOWN)) -> {
-                    //perform an action here e.g. a send message button click
-                    //sendButton.performClick()
                     if (list.contains(autoTextView.text.trim().toString().uppercase(Locale.getDefault()))) {
                         val intent = Intent(this, LabelInfoActivity::class.java)
                         intent.putExtra("Name", autoTextView.text.trim().toString().uppercase(Locale.getDefault()))
                         startActivity(intent)
                     }
-
+                    // 일치하는 음료가 없을 때
                     else {
                         Toast.makeText(this, "해당 음료 정보가 존재하지 않아요 :(", Toast.LENGTH_SHORT).show()
                     }
@@ -138,6 +138,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         searchBtn = findViewById(R.id.searchBtn)
+        // 돋보기 모양 버튼을 눌렀을 때의 설정
         searchBtn.setOnClickListener {
             if (list.contains(autoTextView.text.trim().toString().uppercase(Locale.getDefault()))) {
                 val intent = Intent(this, LabelInfoActivity::class.java)
@@ -150,6 +151,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // 서랍 버튼
         val drawer_btn = findViewById<ImageView>(R.id.drawer_btn)
         drawerLayout = binding.drawerLayout
         drawer_btn.setOnClickListener {
@@ -192,12 +194,14 @@ class MainActivity : AppCompatActivity() {
         setEmailTxt()
     } // OnCreate
 
+    // 유저의 이메일 정보 표시
     private fun setEmailTxt() {
         val headerView = binding.navView.getHeaderView(0)
         val emailTxt = headerView.findViewById<TextView>(R.id.account_email_txt)
         emailTxt.text = user.email
     }
 
+    // 로그아웃 후 로그인 화면으로
     private fun signOut() {
         auth.signOut()
         LoginManager.getInstance().logOut() //facebook logout
@@ -206,6 +210,7 @@ class MainActivity : AppCompatActivity() {
         finish()
     }
 
+    // 어플 종료 (뒤로가기 버튼 누를 때) 설정
     override fun onBackPressed() {
         // 메뉴가 열려있을 경우 메뉴를 닫음
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {

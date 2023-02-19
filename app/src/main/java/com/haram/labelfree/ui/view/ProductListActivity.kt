@@ -18,6 +18,8 @@ import com.haram.labelfree.ui.custom.CustomItemDecoration
 import com.haram.labelfree.ui.viewmodel.DrinkViewModel
 import kotlinx.coroutines.runBlocking
 
+// 제품명 리스트를 보여주는 액티비티
+// 리스트에서 한 제품을 클릭하면 해당 제품 정보들을 보여주는 LabelInfoActivity로 연결됨
 class ProductListActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityProductListBinding

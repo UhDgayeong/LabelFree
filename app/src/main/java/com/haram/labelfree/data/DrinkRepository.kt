@@ -11,19 +11,18 @@ class DrinkRepository {
     val db = Firebase.firestore
 
     private var drinkDocNames = arrayListOf<String>() // 제품명 리스트
-    private var drinkCompanies = arrayListOf<String>()
+    private var drinkCompanies = arrayListOf<String>() // 제조회사 리스트
     private var drinkMap = mapOf<String, String>()
 
+    // Firebase의 Firestore Database에서 제품명과 제조회사 정보를 가져옴
     suspend fun getFirebaseData(): Boolean {
 
         return try {
             val snapshot = db.collection("drinks").get().await()
-            //Log.d("doctest", snapshot.documents.toString())
-            //Log.d("doctest", snapshot.documents.get(0).toString())
 
             for (doc in snapshot.documents) {
                 // 전체 데이터 : Log.d("testingDoc", doc.data.toString())
-                Log.d("testingDoc", doc.data?.get("제품명") as String)
+                // Log.d("testingDoc", doc.data?.get("제품명") as String)
                 drinkDocNames.add(doc.data!!.get("제품명") as String)
                 drinkCompanies.add(doc.data!!.get("제조회사") as String)
             }
@@ -43,6 +42,7 @@ class DrinkRepository {
         return drinkCompanies
     }
 
+    // 매개변수로 받은 음료의 정보들을 반환
     suspend fun getDrinkInfo(docName: String): Boolean {
 
         return try {
@@ -74,10 +74,8 @@ class DrinkRepository {
         }
     }
 
+    // 제품명 정보들을 map 형태로 반환
     fun getDrinkInfoMap(): Map<String, String> {
         return drinkMap
     }
-
-
-
 }

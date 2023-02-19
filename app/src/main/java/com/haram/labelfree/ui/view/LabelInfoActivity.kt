@@ -33,14 +33,12 @@ import kotlinx.coroutines.runBlocking
 import java.util.*
 import kotlin.math.round
 
+// 한 음료의 라벨 표기 사항들을 보여주는 액티비티
 class LabelInfoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLabelInfoBinding
     private val TAG = "LabelInfoTest"
     private val db = Firebase.firestore
-
-    //private val docName = "칠성사이다 ECO"
-    //private val docName = "코카콜라 제로"
 
     private var carbo : Float = 0F
     private var sugar : Float = 0F
@@ -70,30 +68,21 @@ class LabelInfoActivity : AppCompatActivity() {
         //binding.viewModel.getDrinkInfoMap(docName)
 
         runBlocking {
-            //getRepoData()
-            //viewModel.reload()
             viewModel.getDrinkInfoMap(docName)
-            //binding.viewModel = viewModel
         }
 
         binding.viewModel = viewModel
         Log.d("pmTesting", viewModel.productMap.toString())
 
-
-        //viewModel.getDrinkInfoMap(docName)
-        //viewModel.productMap = viewModel.getDrinkInfoMap(docName)
-
-
-
-        //val storageRef = Firebase.storage.reference.child(docName + ".png")
         val storageRef = viewModel.getDrinkImgRef(docName)
 
-        // Ad
+        // Ad 설정
         MobileAds.initialize(this) {}
         mAdView = findViewById(R.id.adView)
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
 
+        // 음료 이미지 로딩
         image = findViewById(R.id.image)
         storageRef.downloadUrl.addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -106,19 +95,20 @@ class LabelInfoActivity : AppCompatActivity() {
         barChart = findViewById(R.id.chart)
         barChart.setNoDataText("")
 
+        // 좌측 상단 백버튼 클릭 설정
         val backBtn = findViewById<ImageView>(R.id.backBtn)
         backBtn.setOnClickListener {
-            //val intent = Intent(this, MainActivity::class.java)
-            //startActivity(intent)
             finish()
         }
 
+        // 그래프 수치 표시
         getGraphData()
 
         initRecyclerViewList()
         initLabelRecyclerView()
     } //onCreate
 
+    // 표 recyclerView 설정
     fun initLabelRecyclerView() {
         val adapter = LabelRecyclerViewAdapter()
         adapter.dataList = mDatas // 데이터 넣기
@@ -126,6 +116,7 @@ class LabelInfoActivity : AppCompatActivity() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
     }
 
+    // 표 recyclerView 내용 표시
     fun initRecyclerViewList() {
         val pm = viewModel.productMap
         with(mDatas) {
@@ -141,6 +132,7 @@ class LabelInfoActivity : AppCompatActivity() {
         }
     }
 
+    // 막대그래프의 데이터 설정
     private fun getGraphData() {
         val entryList = mutableListOf<BarEntry>()
 

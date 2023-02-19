@@ -6,6 +6,7 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import com.haram.labelfree.data.DrinkRepository
 
+// Firebase의
 class DrinkViewModel : ViewModel() {
     var repository = DrinkRepository()
 
@@ -16,10 +17,12 @@ class DrinkViewModel : ViewModel() {
         repository.getFirebaseData()
     }
 
+    // 제품명 리스트를 Activity에게 반환
     fun getDrinkNameList(): ArrayList<String> {
         return repository.getDrinkNameList()
     }
 
+    // 제조회사 리스트를 Activity에게 반환
     fun getDrinkCompanyList(): ArrayList<String> {
         return repository.getDrinkCompanyList()
     }

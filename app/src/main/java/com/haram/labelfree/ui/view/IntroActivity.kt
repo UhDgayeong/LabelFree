@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.haram.labelfree.R
 import com.haram.labelfree.databinding.ActivityIntroBinding
 
+// Splash 이후 로그인 or 회원가입 선택하는 액티비티
 class IntroActivity : AppCompatActivity() {
     lateinit var binding: ActivityIntroBinding
 

@@ -32,6 +32,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
+// IntroActivity 이후 로그인을 할 때의 액티비티
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
@@ -52,6 +53,7 @@ class LoginActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
+        // 이메일 주소 입력 제한 설정
         binding.editEmail.filters = arrayOf(InputFilter { source, _, _, _, _, _ ->
             val ps: Pattern =
                 Pattern.compile("^[a-zA-Z0-9@.]+$")
@@ -62,6 +64,7 @@ class LoginActivity : AppCompatActivity() {
             ""
         }, InputFilter.LengthFilter(25))
 
+        // 비밀번호 입력 제한 설정
         binding.editPw.filters = arrayOf(InputFilter { source, _, _, _, _, _ ->
             val ps: Pattern =
                 Pattern.compile("""^[0-9a-zA-Z!@#$%^+\-=]*$""")
@@ -101,7 +104,7 @@ class LoginActivity : AppCompatActivity() {
         if (requestCode == GOOGLE_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
-                // 로그인 성공 확인
+                // 로그인 성공 확인 -> 이메일 주소 넘겨줌
                 val account = task.getResult(ApiException::class.java)
                 Log.d(TAG, "Google Sign in : " + account.email)
                 firebaseAuthWithGoogle(account.idToken!!)
@@ -116,6 +119,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    // 페이스북 로그인 콜백
     private fun facebookLogin() {
 
         LoginManager.getInstance()
@@ -142,6 +146,7 @@ class LoginActivity : AppCompatActivity() {
             })
     }
 
+    // Firebase Facebook 로그인 설정
     private fun firebaseAuthWithFacebook(accessToken: AccessToken?) {
         // AccessToken 으로 Facebook 인증
         val credential = FacebookAuthProvider.getCredential(accessToken?.token!!)
@@ -161,6 +166,7 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
+    // Firebase Google 로그인 설정
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
@@ -179,6 +185,7 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
+    // 이메일 로그인(페이스북, 구글 X)
     fun signIn(view: View) {
         auth.signInWithEmailAndPassword(binding.editEmail.text.toString(), binding.editPw.text.toString())
             .addOnCompleteListener {  //통신 완료가 된 후 무슨일을 할지

@@ -11,6 +11,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.haram.labelfree.R
 
+// 앱 실행 후 처음 보이는 화면
 class SplashActivity : AppCompatActivity() {
 
     lateinit var auth : FirebaseAuth

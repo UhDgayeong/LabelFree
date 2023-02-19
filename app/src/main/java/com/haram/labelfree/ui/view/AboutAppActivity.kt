@@ -9,6 +9,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 
+// 앱 소개 액티비티
 class AboutAppActivity : AppCompatActivity() {
 
     lateinit var mAdView : AdView
