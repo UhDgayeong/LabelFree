@@ -27,6 +27,7 @@
 |![KakaoTalk_20230307_030318189_02](https://user-images.githubusercontent.com/96832560/223450982-17ef41e2-1ca5-4a9d-8f88-9c3f8ca027f8.jpg)|![KakaoTalk_20230307_030318189_03](https://user-images.githubusercontent.com/96832560/223451147-a47cf0ae-9ccf-47a5-9aaf-ead809ac4dcb.jpg)|![KakaoTalk_20230307_030318189_04](https://user-images.githubusercontent.com/96832560/223451203-9bd40070-8cea-4af5-8286-877c0e7bb31e.jpg)|
 
 * 라벨 표기 사항들을 화면에서 확인할 수 있습니다.
+  - Glide 라이브러리를 이용하여 이미지를 빠르게 로딩할 수 있도록 하였습니다.
   - MPAndroidChart 라이브러리를 이용하여 막대 그래프를 구현하였습니다.
     - https://github.com/PhilJay/MPAndroidChart
   - 표의 값은 1일 영양성분 기준치 값을 기준으로 해당 음료에 영양성분이 들어있는 값을 퍼센테이지로 나타낸 것입니다.
