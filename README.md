@@ -13,7 +13,7 @@
 
 | 메인 화면 | 검색 | 서랍 메뉴 |
 |:--------:|:----:|:--------:|
-|![KakaoTalk_20230307_030318189](https://user-images.githubusercontent.com/96832560/223439574-aef0e2b9-b29a-41f0-bca0-bb61b962cf31.jpg)| <img src="https://user-images.githubusercontent.com/96832560/224104760-d151c94c-2a40-4780-b005-bc7bb0089795.gif" width = "300">  | ![KakaoTalk_20230307_030318189_05](https://user-images.githubusercontent.com/96832560/223442483-a71b213c-9432-4fed-bf6c-423c24608d47.jpg) |
+|![KakaoTalk_20230307_030318189](https://user-images.githubusercontent.com/96832560/223439574-aef0e2b9-b29a-41f0-bca0-bb61b962cf31.jpg)| <img src="https://user-images.githubusercontent.com/96832560/224104760-d151c94c-2a40-4780-b005-bc7bb0089795.gif" width = "250">  | ![KakaoTalk_20230307_030318189_05](https://user-images.githubusercontent.com/96832560/223442483-a71b213c-9432-4fed-bf6c-423c24608d47.jpg) |
 
 * 검색창에 랜덤으로 음료명을 띄워주도록 하였습니다.
 * AutoCompleteTextView를 이용하여 자동완성 검색 기능을 구현하였습니다.
